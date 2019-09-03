@@ -1,0 +1,1 @@
+<view><button type="primary" open-type="getUserInfo" withCredentials="true" data-event-opts="{{[['getuserinfo',[['wxGetUserInfo',['$event']]]]]}}" bindgetuserinfo="__e">微信授权获取用户信息</button></view>

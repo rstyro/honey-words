@@ -1,0 +1,1 @@
+<view class="content"><block wx:for="{{honeyList}}" wx:for-item="item" wx:for-index="index" wx:key="id"><honey-item vue-id="{{'1-'+index}}" id="{{item.id}}" honeyItem="{{item}}" praiseMe="{{praiseMe}}" collectMe="{{collectMe}}" bind:__l="__l"></honey-item></block></view>

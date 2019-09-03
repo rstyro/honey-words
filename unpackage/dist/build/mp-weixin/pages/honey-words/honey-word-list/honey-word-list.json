@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "honey-item": "/pages/honey-words/honey-word-item/honey-word-item"
+  }
+}

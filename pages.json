@@ -2,6 +2,10 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/auth/auth",
+		    "style" : {}
+		},
+		{
 			"path": "pages/tabbar/tabbar-home/tabbar-home",
 			"style": {
 				"navigationBarTitleText": "首页"
@@ -27,6 +31,7 @@
             "path" : "pages/honey-words/honey-word-item/honey-word-item",
             "style" : {}
         }
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
