@@ -1,21 +1,29 @@
 <template>
 	<view class="content">
-		页面 - 2
+		topic
 	</view>
 </template>
 
 <script>
+	
+	
 	export default {
 		data() {
 			return {
-				title: 'Hello'
-			}
+				}
+		},
+		onReachBottom() {
+			this.page++;
+			this.loading = true;
+			this.getList();
 		},
 		onLoad() {
-
+			this.getList();
 		},
 		methods: {
-
+			
+		},
+		components: {
 		}
 	}
 </script>

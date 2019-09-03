@@ -7,12 +7,12 @@
 		<text class='row-box honey-item-content'  selectable='true'>{{honeyItem.content}}</text>
 		<view class="row-box honey-item-bottom">
 			<view class="col-box honey-item-praise" @click="praiseHoneyWords">
-				<image v-if="!honeyItem.praise_flag" class="honey-item-icon" src="/static/img/honey/praise.png"></image>
+				<image v-if="!honeyItem.praiseFlag" class="honey-item-icon" src="/static/img/honey/praise.png"></image>
 				<image v-else class="honey-item-icon" src="/static/img/honey/praise-active.png"></image>
 				<view>{{honeyItem.praiseNum}}</view>
 			</view>
 			<view class="col-box honey-item-collect" @click="collectHoneyWords">
-				<image v-if="!honeyItem.collect_flag" class="honey-item-icon" src="/static/img/honey/heart.png"></image>
+				<image v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/honey/heart.png"></image>
 				<image v-else class="honey-item-icon" src="/static/img/honey/heart-active.png"></image>
 			</view>
 		</view>
@@ -25,7 +25,7 @@
 			honeyItem:Object,
 			praiseMe: Function,
 			collectMe: Function,
-			esId: String
+			id: String
 		},
 		data() {
 			return {
@@ -34,10 +34,10 @@
 		},
 		methods: {
 			praiseHoneyWords(){
-				this.praiseMe(this.esId);
+				this.praiseMe(this.id);
 			},
 			collectHoneyWords(){
-				this.collectMe(this.esId);
+				this.collectMe(this.id);
 			}
 		}
 	}

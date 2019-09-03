@@ -20,7 +20,7 @@
 				pageNo:1,
 				pageSize:10,
 				typeCode:'sayLove',
-				url:"http://localhost:8689/pua/speechcraft/list",
+				url:"/pua/speechcraft/list",
 				authority:'cd8ef7dcd3254932824e30526db19a6c'
 			};
 		},
@@ -37,7 +37,7 @@
 			},
 			getList(){
 				uni.request({
-				    url: this.url,
+				    url: this.baseUrl+this.url,
 				    data: {
 				        keyword: this.keyword,
 						pageNo:this.pageNo,
@@ -58,20 +58,21 @@
 				});
 
 			},
-			praiseHoney(esId){
-				let index = this.honeyList.findIndex(item => item.esId === esId );
+			praiseHoney(id){
+				let index = this.honeyList.findIndex(item => item.id === id );
 				var item = this.honeyList[index];
 				item.praiseFlag = !item.praiseFlag
-				if(item.praise_flag){
-					++item.praise_num;
+				if(item.praiseFlag){
+					++item.praiseNum;
 				}else{
-					item.praise_num = (item.praise_num>0)?item.praise_num-1:item.praise_num
+					item.praiseNum = (item.praiseNum>0)?item.praiseNum-1:item.praiseNum
 				}
 				this.honeyList[index]=item;
 			},
 			collectHoney(id){
 				let index = this.honeyList.findIndex(item => item.id === id );
-				this.honeyList[index].collect_flag= !this.honeyList[index].collect_flag;
+				console.log("index",index);
+				this.honeyList[index].collectFlag= !this.honeyList[index].collectFlag;
 				console.log("id=",id);
 			}
 		}
