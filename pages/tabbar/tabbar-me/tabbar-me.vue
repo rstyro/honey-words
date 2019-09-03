@@ -1,6 +1,6 @@
 <template>
 	<view class="center">
-		<view class="center_top" >
+		<view class="center_top" :style='{backgroundImage: "url("+header+")"}'>
 			<view class="mask"></view>
 		</view>
 		<view class="center_box_bg">
@@ -75,8 +75,7 @@
 					}
 
 				],
-				header:'/static/logo.png',
-				
+				header:'/static/logo.png'
 			};
 		},
 		methods: {
@@ -103,7 +102,9 @@
 
 		&_top {
 			height: 25%;
-			background: url('/static/logo.png') no-repeat 0% 50%;
+			// background-image: url('/static/logo.png');
+			background-repeat: no-repeat;
+			background-position: 0% 50%;
 			background-size: cover;
 
 			// background: #E6E6E6;
