@@ -9,7 +9,8 @@
 	export default {
 		data() {
 			return {
-				
+				token:'',
+				userInfo:''
 			}
 		},
 		onLoad() {
@@ -25,20 +26,18 @@
 					});
 					return false;
 				}else{
-					if(res.detail.userInfo){
-						let tagUserInfo = res.detail.userInfo;
-						
-					}
+					var tagUserInfo = res.detail.userInfo;
 					// 微信登陆，获取一个Code，发送到后台获取openId
 					uni.login({
 					   provider: 'weixin',
 					   success: function (loginRes) {
-					       console.log(JSON.stringify(loginRes));
+					       console.log("loginRes:",JSON.stringify(loginRes));
 						   // 请求自己的服务器
 						   uni.request({
-						       url: this.baseUrl+'/user/login',
+						       url: this.baseUrl+'/pua/user/login',
+							   method:"POST",
 						       data: {
-						   		code: loginCode,
+						   		code: loginRes.code,
 						   		nick_name: tagUserInfo.nickName,
 						   		user_url: tagUserInfo.avatarUrl,
 						   		sex: tagUserInfo.gender,
@@ -47,25 +46,68 @@
 						   		city: tagUserInfo.city
 						       },
 						       header: {
-						   		'Authority':this.authority
+						   		'Authority':''
 						       },
 						       success: (res) => {
-						   		if(res.statusCode == 200 && res.data.status == 200){
-						   			this.honeyList= res.data.data.records;
-						   		}
-						           console.log(res);
+								   console.log(res);
+									if(res.statusCode == 200 && res.data.status == 200){
+										//保存token到本地
+										saveDataToStorage(res.data.data);
+									}
+									
 						       },fail(error) {
-						       	console.log(error);
+								   uni.showToast({
+								   	title: "服务器异常，登录失败",
+								   	icon: "none"
+								   });
 						       }
 						   });
 					   }
 					});
 					
 				}
-				console.log('-------用户授权，并获取用户基本信息和加密数据------');
-				
 			},
-			
+			//自动登陆
+			autoLogin:function(token){
+			   // 请求自己的服务器
+			   uni.request({
+				   url: this.baseUrl+'/pua/user/autoLogin',
+				   method:"POST",
+				   data: {
+					token: token,
+				   },
+				   header: {
+					'Authority':''
+				   },
+				   success: (res) => {
+					   console.log(res);
+						if(res.statusCode == 200 && res.data.status == 200){
+							//保存token到本地
+							saveDataToStorage(res.data.data);
+						}
+						
+				   },fail(error) {
+					   uni.showToast({
+						title: "服务器异常，登录失败",
+						icon: "none"
+					   });
+				   }
+			   });
+			},
+			init:function(){
+				const token = uni.getStorageSync("token");
+				if(token){
+					this.autoLogin(token);
+				}
+			},
+			saveDataToStorage: function(data){
+				if(data.token){
+					uni.setStorageSync("token",token);
+				}
+				if(data.userInfo){
+					uni.setStorageSync("userInfo",data.userInfo);
+				}
+			}
 		}
 	}
 </script>
