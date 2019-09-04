@@ -10,15 +10,18 @@
 		data() {
 			return {
 				token:'',
-				userInfo:''
+				userInfo:'',
+				header: { 'Cookie': '', "content-type": "application/x-www-form-urlencoded" },
 			}
 		},
 		onLoad() {
+			console.log("baseUrl:",getApp().globalData.baseUrl);
 			this.init();
 		},
 		methods: {
 			wxGetUserInfo:function(res){
 				console.log("res:",res);
+				var that = this;
 				if (!res.detail.iv) {
 					uni.showToast({
 						title: "您取消了授权,登录失败",
@@ -34,8 +37,9 @@
 					       console.log("loginRes:",JSON.stringify(loginRes));
 						   // 请求自己的服务器
 						   uni.request({
-						       url: this.baseUrl+'/pua/user/login',
+						       url: getApp().globalData.baseUrl+'/pua/user/login',
 							   method:"POST",
+							   header:that.header,
 						       data: {
 						   		code: loginRes.code,
 						   		nick_name: tagUserInfo.nickName,
@@ -44,22 +48,15 @@
 						   		country: tagUserInfo.country,
 						   		province: tagUserInfo.province,
 						   		city: tagUserInfo.city
-						       },
-						       header: {
-						   		'Authority':''
-						       },
-						       success: (res) => {
-								   console.log(res);
+						       },success: (res) => {
+								   console.log("res:",res);
 									if(res.statusCode == 200 && res.data.status == 200){
 										//保存token到本地
-										saveDataToStorage(res.data.data);
+										that.saveDataToStorage(res.data.data);
 									}
 									
 						       },fail(error) {
-								   uni.showToast({
-								   	title: "服务器异常，登录失败",
-								   	icon: "none"
-								   });
+								   that.showError();
 						       }
 						   });
 					   }
@@ -67,30 +64,39 @@
 					
 				}
 			},
-			//自动登陆
+			// 自动登陆
 			autoLogin:function(token){
+				var that = this;
 			   // 请求自己的服务器
 			   uni.request({
-				   url: this.baseUrl+'/pua/user/autoLogin',
+				   url: getApp().globalData.baseUrl+'/pua/user/autoLogin',
 				   method:"POST",
-				   data: {
-					token: token,
-				   },
 				   header: {
-					'Authority':''
+					"content-type": "application/x-www-form-urlencoded", 
+					'Authority':token
+				   },
+				   dataType: "json",
+				   data: {
+					'token': token,
+					'Authority':token
 				   },
 				   success: (res) => {
 					   console.log(res);
 						if(res.statusCode == 200 && res.data.status == 200){
 							//保存token到本地
-							saveDataToStorage(res.data.data);
+							that.saveDataToStorage(res.data.data);
+						}else if(res.data.status == "30002"){
+							uni.showToast({
+								title: "token失效，请重新授权",
+								icon: "none"
+							});
+						}else{
+							that.showError();
 						}
 						
 				   },fail(error) {
-					   uni.showToast({
-						title: "服务器异常，登录失败",
-						icon: "none"
-					   });
+					   console.log(error);
+					   that.showError();
 				   }
 			   });
 			},
@@ -102,11 +108,21 @@
 			},
 			saveDataToStorage: function(data){
 				if(data.token){
-					uni.setStorageSync("token",token);
+					uni.setStorageSync("token",data.token);
 				}
 				if(data.userInfo){
 					uni.setStorageSync("userInfo",data.userInfo);
 				}
+				// 跳转到首页
+				uni.switchTab({
+				    url: '/pages/tabbar/tabbar-home/tabbar-home'
+				});
+			},
+			showError: function(){
+				uni.showToast({
+					title: "服务器异常，登录失败",
+					icon: "none"
+				});
 			}
 		}
 	}

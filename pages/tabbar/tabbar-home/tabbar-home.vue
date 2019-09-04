@@ -36,8 +36,9 @@
 				
 			},
 			getList(){
+				var that = this;
 				uni.request({
-				    url: this.baseUrl+this.url,
+				    url: this.$baseUrl+this.url,
 				    data: {
 				        keyword: this.keyword,
 						pageNo:this.pageNo,
