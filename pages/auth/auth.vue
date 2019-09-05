@@ -11,7 +11,7 @@
 			return {
 				token:'',
 				userInfo:'',
-				header: { 'Cookie': '', "content-type": "application/x-www-form-urlencoded" },
+				header: { 'Cookie': '', "content-type": "application/x-www-form-urlencoded","Authority":''},
 			}
 		},
 		onLoad() {
@@ -20,7 +20,7 @@
 		},
 		methods: {
 			wxGetUserInfo:function(res){
-				console.log("res:",res);
+				console.log("wxGetUserInfo-res:",res);
 				var that = this;
 				if (!res.detail.iv) {
 					uni.showToast({
@@ -33,11 +33,11 @@
 					// 微信登陆，获取一个Code，发送到后台获取openId
 					uni.login({
 					   provider: 'weixin',
-					   success: function (loginRes) {
-					       console.log("loginRes:",JSON.stringify(loginRes));
+					   success: (loginRes)=> {
+					       console.log("login-loginRes:",JSON.stringify(loginRes));
 						   // 请求自己的服务器
 						   uni.request({
-						       url: getApp().globalData.baseUrl+'/pua/user/login',
+						       url: getApp().globalData.baseUrl+'/pua/users/login',
 							   method:"POST",
 							   header:that.header,
 						       data: {
@@ -48,14 +48,16 @@
 						   		country: tagUserInfo.country,
 						   		province: tagUserInfo.province,
 						   		city: tagUserInfo.city
-						       },success: (res) => {
-								   console.log("res:",res);
+						       },
+							   success: (res) => {
+								   console.log("login-res:",res);
 									if(res.statusCode == 200 && res.data.status == 200){
 										//保存token到本地
-										that.saveDataToStorage(res.data.data);
+										that.saveDataToStorage(res.data);
 									}
 									
 						       },fail(error) {
+								   console.log(error);
 								   that.showError();
 						       }
 						   });
@@ -65,26 +67,20 @@
 				}
 			},
 			// 自动登陆
-			autoLogin:function(token){
+			autoLogin:function(){
 				var that = this;
 			   // 请求自己的服务器
 			   uni.request({
-				   url: getApp().globalData.baseUrl+'/pua/user/autoLogin',
+				   url: getApp().globalData.baseUrl+'/pua/users/autoLogin',
 				   method:"POST",
-				   header: {
-					"content-type": "application/x-www-form-urlencoded", 
-					'Authority':token
-				   },
+				   header: that.header,
 				   dataType: "json",
-				   data: {
-					'token': token,
-					'Authority':token
-				   },
+				   data: {'Authority':that.token},
 				   success: (res) => {
-					   console.log(res);
+					   console.log(res,"<<=res");
 						if(res.statusCode == 200 && res.data.status == 200){
 							//保存token到本地
-							that.saveDataToStorage(res.data.data);
+							that.saveDataToStorage(res.data);
 						}else if(res.data.status == "70000"){
 							uni.showToast({
 								title: "token失效，请重新授权登录",
@@ -101,12 +97,16 @@
 			   });
 			},
 			init:function(){
-				const token = uni.getStorageSync("token");
-				if(token){
-					this.autoLogin(token);
+				const catchToken = uni.getStorageSync("token");
+				console.log("catchToken:",catchToken);
+				if(catchToken){
+					this.token=catchToken;
+					this.header.Authority=catchToken;
+					this.autoLogin();
 				}
 			},
 			saveDataToStorage: function(data){
+				console.log("storage-data:",data);
 				if(data.token){
 					uni.setStorageSync("token",data.token);
 				}

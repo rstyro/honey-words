@@ -1,5 +1,9 @@
 <script>
 export default {
+	globalData: {  
+		text: 'text',
+		baseUrl:"https://www.lrshuai.top/miniapi"
+	}, 
 	onLaunch: function() {
 		console.log('App Launch');
 

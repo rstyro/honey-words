@@ -20,7 +20,7 @@
 				pageNo:1,
 				pageSize:10,
 				typeCode:'sayLove',
-				authority:'cd8ef7dcd3254932824e30526db19a6c',
+				authority:'',
 				api:{
 					baseUrl:"http://localhost:8689",
 					listUrl:"/pua/speechcraft/list",
@@ -30,6 +30,8 @@
 			};
 		},
 		onLoad() {
+			// this.api.baseUrl=getApp().globalData.baseUrl;
+			this.setToken();
 			this.getList();
 		},
 		components: {
@@ -38,7 +40,18 @@
 		},
 		methods: {
 			search(val) {
-				
+				this.keyword=val;
+				this.getList();
+			},
+			setToken(){
+				const cacheToken = uni.getStorageSync("token");
+				console.log("cacheToken:",cacheToken);
+				if(cacheToken){
+					this.authority=cacheToken;
+				}else{
+					//this.authority='205dbd17d32142c8a574254d79f559c0'
+					this.authority='cd8ef7dcd3254932824e30526db19a6c'
+				}
 			},
 			getList(){
 				var that = this;
@@ -55,7 +68,7 @@
 				    },
 				    success: (res) => {
 						if(res.statusCode == 200 && res.data.status == 200){
-							that.honeyList= res.data.data.records;
+							this.honeyList= res.data.data.records;
 						}else if(res.data.status == "70000"){
 							uni.showModal({
 							    title: '提示',

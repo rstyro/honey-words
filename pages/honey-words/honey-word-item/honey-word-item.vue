@@ -25,7 +25,7 @@
 			honeyItem:Object,
 			praiseMe: Function,
 			collectMe: Function,
-			id: String
+			sftId: Number
 		},
 		data() {
 			return {
@@ -34,10 +34,10 @@
 		},
 		methods: {
 			praiseHoneyWords(){
-				this.praiseMe(this.id);
+				this.praiseMe(this.sftId);
 			},
 			collectHoneyWords(){
-				this.collectMe(this.id);
+				this.collectMe(this.sftId);
 			}
 		}
 	}

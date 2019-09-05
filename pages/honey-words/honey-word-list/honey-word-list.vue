@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<honeyItem v-for="(item,index) in honeyList" :key="item.id" 
-		:id="item.id" :honeyItem="item" :praiseMe="praiseMe" :collectMe="collectMe"></honeyItem>
+		:sftId="item.id" :honeyItem="item" :praiseMe="praiseMe" :collectMe="collectMe"></honeyItem>
 	</view>
 </template>
 
