@@ -1,6 +1,6 @@
 <template>
-	<view>
-		<button type="primary" class="" open-type="getUserInfo" @getuserinfo="wxGetUserInfo" withCredentials="true">微信授权获取用户信息</button>
+	<view class="content">
+		<button type="primary" class="" open-type="getUserInfo" @getuserinfo="wxGetUserInfo" withCredentials="true">授权获取用户信息</button>
 
 	</view>
 </template>
@@ -85,9 +85,9 @@
 						if(res.statusCode == 200 && res.data.status == 200){
 							//保存token到本地
 							that.saveDataToStorage(res.data.data);
-						}else if(res.data.status == "30002"){
+						}else if(res.data.status == "70000"){
 							uni.showToast({
-								title: "token失效，请重新授权",
+								title: "token失效，请重新授权登录",
 								icon: "none"
 							});
 						}else{
@@ -128,6 +128,12 @@
 	}
 </script>
 
-<style>
-
+<style lang="scss">
+	.content{
+		margin: 40% auto;
+		
+		button{
+			width: 60%;
+		}
+	}
 </style>

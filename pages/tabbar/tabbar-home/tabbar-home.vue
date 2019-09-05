@@ -20,8 +20,13 @@
 				pageNo:1,
 				pageSize:10,
 				typeCode:'sayLove',
-				url:"/pua/speechcraft/list",
-				authority:'cd8ef7dcd3254932824e30526db19a6c'
+				authority:'cd8ef7dcd3254932824e30526db19a6c',
+				api:{
+					baseUrl:"http://localhost:8689",
+					listUrl:"/pua/speechcraft/list",
+					praiseUrl:"/pua/praise/praiseMe",
+					collectUrl:"/pua/collect/collectMe"
+				}
 			};
 		},
 		onLoad() {
@@ -38,19 +43,33 @@
 			getList(){
 				var that = this;
 				uni.request({
-				    url: this.$baseUrl+this.url,
+				    url: that.api.baseUrl+that.api.listUrl,
 				    data: {
-				        keyword: this.keyword,
-						pageNo:this.pageNo,
-						pageSize:this.pageSize,
-						typeCode:this.typeCode
+				        keyword: that.keyword,
+						pageNo:that.pageNo,
+						pageSize:that.pageSize,
+						typeCode:that.typeCode
 				    },
 				    header: {
-						'Authority':this.authority
+						'Authority':that.authority
 				    },
 				    success: (res) => {
 						if(res.statusCode == 200 && res.data.status == 200){
-							this.honeyList= res.data.data.records;
+							that.honeyList= res.data.data.records;
+						}else if(res.data.status == "70000"){
+							uni.showModal({
+							    title: '提示',
+							    content: 'token失效，请重新授权登录',
+								showCancel: false,
+							    success: function (res) {
+							        if (res.confirm) {
+							            console.log('用户点击确定');
+										uni.reLaunch({
+										    url: '/pages/auth/auth'
+										});
+							        }
+							    }
+							});
 						}
 				        console.log(res);
 				    },fail(error) {
