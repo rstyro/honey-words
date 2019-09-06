@@ -30,7 +30,7 @@
 			};
 		},
 		onLoad() {
-			// this.api.baseUrl=getApp().globalData.baseUrl;
+			 this.api.baseUrl=getApp().globalData.baseUrl;
 			this.setToken();
 			this.getList();
 		},
@@ -49,8 +49,8 @@
 				if(cacheToken){
 					this.authority=cacheToken;
 				}else{
-					//this.authority='205dbd17d32142c8a574254d79f559c0'
-					this.authority='cd8ef7dcd3254932824e30526db19a6c'
+					this.authority='205dbd17d32142c8a574254d79f559c0'
+					// this.authority='cd8ef7dcd3254932824e30526db19a6c'
 				}
 			},
 			getList(){
