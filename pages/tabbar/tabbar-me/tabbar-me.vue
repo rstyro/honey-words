@@ -75,11 +75,35 @@
 					}
 
 				],
+				userInfo:{},
 				header:'/static/logo.png'
 			};
 		},
+		onLoad() {
+			const userInfo = uni.getStorageSync("userInfo");
+			if(userInfo){
+				this.userInfo=userInfo;
+			}else{
+				this.showTokenError();
+			}
+			console.log("userInfo:",userInfo);
+		},
 		methods: {
-
+			showTokenError(){
+				uni.showModal({
+					title: '提示',
+					content: 'token失效，请重新授权登录',
+					showCancel: false,
+					success: function (res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							uni.reLaunch({
+								url: '/pages/auth/auth'
+							});
+						}
+					}
+				});
+			}
 		},
 		computed: {
 

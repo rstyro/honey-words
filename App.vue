@@ -52,4 +52,5 @@ width:100%;overflow: hidden;
 .text-none{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .clearfix{clear: both;}
 
+
 </style>

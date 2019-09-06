@@ -11,7 +11,7 @@
 			return {
 				token:'',
 				userInfo:'',
-				header: { 'Cookie': '', "content-type": "application/x-www-form-urlencoded","Authority":''},
+				header: {"content-type": "application/x-www-form-urlencoded","Authority":''},
 			}
 		},
 		onLoad() {
@@ -102,6 +102,9 @@
 				if(catchToken){
 					this.token=catchToken;
 					this.header.Authority=catchToken;
+					this.autoLogin();
+				}else{
+					this.token="205dbd17d32142c8a574254d79f559c0";
 					this.autoLogin();
 				}
 			},

@@ -39,7 +39,8 @@
 		"navigationBarTitleText": "情话海",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
-		"enablePullDownRefresh": true
+		"enablePullDownRefresh": true,
+		"onReachBottomDistance": 100
 	},
 	"tabBar": {
 		"borderStyle": "black",
