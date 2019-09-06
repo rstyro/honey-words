@@ -3,7 +3,7 @@
 	<view class="content">
 		<mSearch :mode="2" button="inside" backgroundColor="#efeff1" @search="search($event)"></mSearch>
 		<view class="honey-list-box">
-			<honeyList :honeyList="honeyList" :praiseMe="praiseHoney" :collectMe="collectHoney" ></honeyList>
+			<honeyList :honeyList="list" :praiseMe="praiseHoney" :collectMe="collectHoney" ></honeyList>
 		</view>
 	</view>
 </template>
@@ -15,7 +15,7 @@
 	export default {
 		data() {
 			return {
-				honeyList:[],
+				list:[],
 				keyword:'',
 				pageNo:1,
 				pageSize:10,
@@ -30,9 +30,16 @@
 			};
 		},
 		onLoad() {
-			 this.api.baseUrl=getApp().globalData.baseUrl;
+			
+			this.api.baseUrl=getApp().globalData.baseUrl;
 			this.setToken();
 			this.getList();
+		},
+		// 页面上拉触底事件的处理函数
+		onReachBottom(){
+			console.log("到底了");
+			//this.pageNo++;
+			//this.getList();
 		},
 		components: {
 			mSearch,
@@ -54,6 +61,7 @@
 				}
 			},
 			getList(){
+				//uni.showLoading({title:"加载中"});
 				var that = this;
 				uni.request({
 				    url: that.api.baseUrl+that.api.listUrl,
@@ -68,7 +76,11 @@
 				    },
 				    success: (res) => {
 						if(res.statusCode == 200 && res.data.status == 200){
-							this.honeyList= res.data.data.records;
+							if(res.data.data.pages>0){
+								console.log("list:",res.data.data.records);
+							}
+								//that.list.concat(res.data.data.records);
+								that.list=res.data.data.records;
 						}else if(res.data.status == "70000"){
 							uni.showModal({
 							    title: '提示',
@@ -87,27 +99,30 @@
 				        console.log(res);
 				    },fail(error) {
 				    	console.log(error);
-				    }
+				    },complete(){
+						//uni.hideLoading();
+					}
 				});
-
+				
 			},
 			praiseHoney(id){
-				let index = this.honeyList.findIndex(item => item.id === id );
-				var item = this.honeyList[index];
+				let index = this.list.findIndex(item => item.id === id );
+				var item = this.list[index];
 				item.praiseFlag = !item.praiseFlag
 				if(item.praiseFlag){
 					++item.praiseNum;
 				}else{
 					item.praiseNum = (item.praiseNum>0)?item.praiseNum-1:item.praiseNum
 				}
-				this.honeyList[index]=item;
+				this.list[index]=item;
 			},
 			collectHoney(id){
-				let index = this.honeyList.findIndex(item => item.id === id );
+				let index = this.list.findIndex(item => item.id === id );
 				console.log("index",index);
-				this.honeyList[index].collectFlag= !this.honeyList[index].collectFlag;
+				this.list[index].collectFlag= !this.list[index].collectFlag;
 				console.log("id=",id);
-			}
+			},
+			
 		}
 	};
 </script>
