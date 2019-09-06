@@ -75,7 +75,7 @@
 				if(cacheToken){
 					this.authority=cacheToken;
 				}else{
-					this.authority='205dbd17d32142c8a574254d79f559c0'
+					this.authority='a050ddf856ea4b0c9c38f10a1692248e'
 					// this.authority='cd8ef7dcd3254932824e30526db19a6c'
 				}
 			},
@@ -109,6 +109,7 @@
 					this.pages=res.data.data.pages;
 					this.list = this.list.concat(res.data.data.records);
 				}else if(res.data.status == "70000"){
+					uni.removeStorageSync("token");
 					this.showTokenError();
 				}else{
 					this.requestError();
