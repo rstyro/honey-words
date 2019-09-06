@@ -42,8 +42,8 @@
 							   header:that.header,
 						       data: {
 						   		code: loginRes.code,
-						   		nick_name: tagUserInfo.nickName,
-						   		user_url: tagUserInfo.avatarUrl,
+						   		nickName: tagUserInfo.nickName,
+						   		userUrl: tagUserInfo.avatarUrl,
 						   		sex: tagUserInfo.gender,
 						   		country: tagUserInfo.country,
 						   		province: tagUserInfo.province,
