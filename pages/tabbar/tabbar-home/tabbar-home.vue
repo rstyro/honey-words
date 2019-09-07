@@ -155,24 +155,25 @@
 				    })
 			},
 			collectHoney(id){
+				var that = this;
 				//请求
 				uni.request({
-				        url: this.api.baseUrl+this.api.collectUrl,
+				        url: that.api.baseUrl+that.api.collectUrl,
 					    method:"POST",
 						header: {
-							'Authority':this.authority,
+							'Authority':that.authority,
 							"content-type": "application/x-www-form-urlencoded"
 						},
 						data:{
-							tableType:this.tableType.sft,
+							tableType:that.tableType.sft,
 							tableId:id
 						}
 				  }).then(data => {//data为一个数组，数组第一项为错误信息，第二项为返回数据
 				        var [error, res]  = data;
 						if(res.data.status == 200){
-							let index = this.list.findIndex(item => item.id === id );
+							let index = that.list.findIndex(item => item.id === id );
 							console.log("index",index);
-							this.list[index].collectFlag= !this.list[index].collectFlag;
+							that.list[index].collectFlag= !that.list[index].collectFlag;
 							console.log("收藏成功,id={}",id)
 						}else{
 							uni.showToast({

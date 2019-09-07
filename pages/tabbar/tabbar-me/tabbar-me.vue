@@ -1,6 +1,6 @@
 <template>
 	<view class="center">
-		<view class="center_top" :style='{backgroundImage: "url("+header+")"}'>
+		<view class="center_top" :style='{backgroundImage: "url("+userInfo.picPath+")"}'>
 			<view class="mask"></view>
 		</view>
 		<view class="center_box_bg">
@@ -9,7 +9,7 @@
 					<view class="profily_header">
 
 					</view>
-					<text>帅大叔</text>
+					<text>{{userInfo.nickName}}}</text>
 					<image src="/static/img/me/setting.png" mode=""></image>
 				</view>
 				<view class="order_status">
