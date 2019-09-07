@@ -103,9 +103,6 @@
 					this.token=catchToken;
 					this.header.Authority=catchToken;
 					this.autoLogin();
-				}else{
-					this.token="205dbd17d32142c8a574254d79f559c0";
-					this.autoLogin();
 				}
 			},
 			saveDataToStorage: function(data){

@@ -1,19 +1,19 @@
 <template>
 	<view class="center">
-		<view class="center_top" :style='{backgroundImage: "url("+userInfo.picPath+")"}'>
+		<view class="center_top" :style='{backgroundImage: "url("+userInfo.picUrl+")"}'>
 			<view class="mask"></view>
 		</view>
 		<view class="center_box_bg">
 			<view class="profily">
 				<view class="base">
-					<view class="profily_header">
+					<view class="profily_header" :style='{backgroundImage: "url("+userInfo.picUrl+")"}'>
 
 					</view>
 					<text>{{userInfo.nickName}}}</text>
 					<image src="/static/img/me/setting.png" mode=""></image>
 				</view>
 				<view class="order_status">
-					<view class="status" v-for="item in status">
+					<view class="status" v-for="item in status"  :key="item.key" >
 						<image class="icon" :src="item.url" mode="aspectFill"></image>
 						<text>{{item.name}}</text>
 					</view>
@@ -23,7 +23,7 @@
 
 			</view>
 			<view class="center_menu">
-				<view class="menu_item" v-for="item in menus">
+				<view class="menu_item" v-for="item in menus" :key="item.key" >
 					<image :src="item.icon" mode="aspectFill"></image>
 					<text>{{item.name}}</text>
 				</view>
@@ -43,8 +43,8 @@
 					},
 					{
 						key: 2,
-						name: '点赞',
-						url: '/static/img/honey/praise-active.png'
+						name: '打赏',
+						url: '/static/img/reward.png'
 					},
 					{
 						key: 3,
@@ -75,7 +75,9 @@
 					}
 
 				],
-				userInfo:{},
+				userInfo:{
+					picUrl:""
+				},
 				header:'/static/logo.png'
 			};
 		},
@@ -166,7 +168,7 @@
 		.profily_header {
 			height: 120upx;
 			width: 120upx;
-			background-image: url('/static/logo.png');
+			// background-image: url('/static/logo.png');
 			background-size: 100%;
 		}
 
@@ -237,7 +239,7 @@
 				height: 30upx;
 				position: absolute;
 				right: 5%;
-				background: url('/static/img/me/right.png') no-repeat;
+				background: url('https://www.lrshuai.top/upload/mini/right.png') no-repeat;
 				background-size: 100%;
 			}
 
