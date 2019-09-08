@@ -9,11 +9,11 @@
 					<view class="profily_header" :style='{backgroundImage: "url("+userInfo.picUrl+")"}'>
 
 					</view>
-					<text>{{userInfo.nickName}}}</text>
-					<image src="/static/img/me/setting.png" mode=""></image>
+					<text>{{userInfo.nickName}}</text>
+					<image src="/static/img/me/setting.png" mode="" @click="settingPage"></image>
 				</view>
 				<view class="order_status">
-					<view class="status" v-for="item in status"  :key="item.key" >
+					<view class="status" v-for="item in status"  :key="item.key" @click="topClick(item.key)">
 						<image class="icon" :src="item.url" mode="aspectFill"></image>
 						<text>{{item.name}}</text>
 					</view>
@@ -23,9 +23,10 @@
 
 			</view>
 			<view class="center_menu">
-				<view class="menu_item" v-for="item in menus" :key="item.key" >
+				<view class="menu_item" v-for="item in menus" :key="item.key" @click="menuClick(item.key)">
 					<image :src="item.icon" mode="aspectFill"></image>
 					<text>{{item.name}}</text>
+					<text v-if="item.redDot" class="messageRedDot"></text>
 				</view>
 			</view>
 		</view>
@@ -39,46 +40,57 @@
 				status: [{
 						key: 1,
 						name: '收藏',
-						url: '/static/img/honey/heart-active.png'
+						url: '/static/img/collect.png'
 					},
 					{
 						key: 2,
-						name: '打赏',
-						url: '/static/img/reward.png'
+						name: '社区',
+						url: '/static/img/cloud.png'
 					},
 					{
+						name: '打赏',
+						url: '/static/img/reward.png',
 						key: 3,
-						name: '消息',
-						url: '/static/img/me/message.png'
 					}
 				],
 				menus: [
 					{
+						key: 1,
+						name: '发布消息',
+						icon: '/static/img/publish.png',
+						redDot:false
+					},
+					{
+						key: 2,
+						name: '系统消息',
+						icon: '/static/img/me/message.png',
+						redDot:true
+					},
+					{
 						name: '清除缓存',
 						icon: '/static/img/clean.png',
 						key: 3,
+						redDot:false
 					},
-					{
-						name: '打赏',
-						icon: '/static/img/reward.png',
-						key: 4,
-					},
+					
 					{
 						name: '意见反馈',
 						icon: '/static/img/feedback.png',
-						key: 5,
+						key: 4,
+						redDot:false
 					},
 					{
 						name: '关于我',
 						icon: '/static/img/about.png',
-						key: 6,
+						key: 5,
+						redDot:false
 					}
 
 				],
 				userInfo:{
-					picUrl:""
-				},
-				header:'/static/logo.png'
+					picUrl:"/static/logo.png",
+					nickName:"帅大叔"
+				}
 			};
 		},
 		onLoad() {
@@ -86,7 +98,7 @@
 			if(userInfo){
 				this.userInfo=userInfo;
 			}else{
-				this.showTokenError();
+				//this.showTokenError();
 			}
 			console.log("userInfo:",userInfo);
 		},
@@ -104,6 +116,101 @@
 							});
 						}
 					}
+				});
+			},
+			topClick(key){
+				switch(key){
+					case 1:
+						this.collectPage();
+						break;
+					case 2:
+						this.cloudPage();
+						break;
+					case 3:
+						this.rewardMoney();
+						break;
+				}
+			},
+			menuClick(key){
+				switch(key){
+					case 1:
+						this.publishMessage();
+						break;
+					case 2:
+						this.systemMessage();
+						break;
+					case 3:
+						this.cleanCache();
+						break;
+					case 4:
+						this.feedback();
+						break;
+					case 5:
+						this.aboutMe();
+						break;
+				}
+			},
+			settingPage(){
+				uni.navigateTo({
+				    url: '/pages/menus/setting/setting',
+				    animationType: 'pop-in',
+				    animationDuration: 1000
+				});
+			},
+			collectPage(){
+				uni.navigateTo({
+				    url: '/pages/menus/collect/collect',
+				    animationType: 'pop-in',
+				    animationDuration: 1000
+				});
+			},
+			cloudPage(){
+				uni.showToast({
+					title: '暂未开放',
+					duration: 2000
+				});
+			},
+			rewardMoney(){
+				uni.navigateTo({
+				    url: '/pages/menus/reward/reward',
+				    animationType: 'pop-in',
+				    animationDuration: 1000
+				});
+			},
+			publishMessage(){
+				uni.navigateTo({
+				    url: '/pages/menus/publish-message/publish-message',
+				    animationType: 'zoom-out',
+				    animationDuration: 1000
+				});
+			},
+			systemMessage(){
+				uni.navigateTo({
+				    url: '/pages/menus/system-message/system-message',
+				    animationType: 'zoom-out',
+				    animationDuration: 1000
+				});
+			},
+			cleanCache(){
+				uni.removeStorageSync("token");
+				uni.removeStorageSync("userInfo");
+				uni.showToast({
+					title: '清除成功',
+					duration: 2000
+				});
+			},
+			feedback(){
+				uni.navigateTo({
+				    url: '/pages/menus/feedback/feedback',
+				    animationType: 'zoom-out',
+				    animationDuration: 1000
+				});
+			},
+			aboutMe(){
+				uni.navigateTo({
+				    url: '/pages/menus/about/about',
+				    animationType: 'fade-in',
+				    animationDuration: 1000
 				});
 			}
 		},
@@ -250,6 +357,19 @@
 			image {
 				width: 40upx;
 				height: 40upx;
+			}
+			
+			 .messageRedDot{
+			  display: inline-block;
+			  position: absolute;
+			  right: 90upx;
+			  top: 40upx;
+			  width: 20upx;
+			  height: 20upx;
+			  background: #d00;
+			  color: #fff;
+			  border-radius: 50%;
+			  text-align: center;
 			}
 
 			&:nth-of-type(4) {

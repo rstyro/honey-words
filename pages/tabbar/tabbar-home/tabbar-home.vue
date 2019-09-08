@@ -2,9 +2,11 @@
 	
 	<view class="content">
 		<mSearch :mode="2" button="inside" backgroundColor="#efeff1" @search="search($event)"></mSearch>
-		<view class="honey-list-box">
-			<honeyList :honeyList="list" :praiseMe="praiseHoney" :collectMe="collectHoney" ></honeyList>
+		<text v-if="isNull"  class="null-data">暂无数据</text>
+		<view v-else class="honey-list-box" >
+			<honeyList  :honeyList="list" :praiseMe="praiseHoney" :collectMe="collectHoney" ></honeyList>
 		</view>
+		
 	</view>
 </template>
 
@@ -22,7 +24,7 @@
 				pages:0,
 				typeCode:'sayLove',
 				authority:'',
-				isFinish:true,
+				isNull:true,
 				api:{
 					baseUrl:"http://localhost:8689",
 					listUrl:"/pua/speechcraft/list",
@@ -75,7 +77,7 @@
 				if(cacheToken){
 					this.authority=cacheToken;
 				}else{
-					this.authority='a050ddf856ea4b0c9c38f10a1692248e'
+					 this.authority='a050ddf856ea4b0c9c38f10a1692248e'
 					// this.authority='cd8ef7dcd3254932824e30526db19a6c'
 				}
 			},
@@ -98,7 +100,7 @@
 				if(error){
 					console.log(error);
 				}
-				if(res.data.status == 200 && res.data.data.pages>0){
+				if(res.data.status == 200){
 					console.log("list:",res.data.data.records);
 					if(this.pageNo == 1){
 						uni.pageScrollTo({
@@ -106,8 +108,15 @@
 						    duration: 30
 						});
 					}
+					
 					this.pages=res.data.data.pages;
-					this.list = this.list.concat(res.data.data.records);
+					if(res.data.data.pages>0){
+						this.isNull=false;
+						this.list = this.list.concat(res.data.data.records);
+					}else{
+						this.isNull=true;
+					}
+						
 				}else if(res.data.status == "70000"){
 					uni.removeStorageSync("token");
 					this.showTokenError();
@@ -226,5 +235,11 @@
 	width: 100%;
 	padding-top: 80rpx;
 	padding-bottom: 5rpx;
+}
+.null-data{
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  text-align: center;
 }
 </style>
