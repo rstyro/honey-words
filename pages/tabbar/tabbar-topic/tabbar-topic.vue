@@ -18,10 +18,23 @@
 				start: 0,
 				end: 0,
 				list: [], // 列表
-				loading: true
+				loading: true,
+				authority:'',
+				pageNo:1,
+				pageSize:10,
+				pages:0,
+				api:{
+					baseUrl:"http://localhost:8689",
+					listUrl:"/pua/speechcraftType/list",
+					praiseUrl:"/pua/praise/praiseMe",
+					collectUrl:"/pua/collect/collectMe",
+					pre:"https://www.lrshuai.top/miniadmin/show"
+				},
 			}
 		},
 		onLoad() {
+			this.api.baseUrl=getApp().globalData.baseUrl;
+			this.setToken();
 			this.getList();
 		}, 
 		onReachBottom() {
@@ -29,6 +42,7 @@
 			this.loading = true;
 			this.getList();
 		},
+		
 		methods: {
 			// 选中
 			choose(item) {
@@ -36,21 +50,51 @@
 				console.log(item)
 			},
 			// 模拟加载数据
-			getList() {
-				if (this.list.length < data.list.length) {
-					setTimeout(() => {
-						this.end = this.page * 10;
-						this.list = this.list.concat(data.list.slice(this.start, this.end));
-						this.start = this.end;
-						// 延迟 120 毫秒隐藏加载动画，为了跟组件里面的 100 毫秒定位有个平缓过度
-						setTimeout(() => {
-							this.loading = false;
-						}, 120);
-					}, 1000)
-				} else {
-					this.loading = false;
+			async getList() {
+				// if (this.list.length < data.list.length) {
+				// 	setTimeout(() => {
+				// 		this.end = this.page * 10;
+				// 		this.list = this.list.concat(data.list.slice(this.start, this.end));
+				// 		this.start = this.end;
+				// 		// 延迟 120 毫秒隐藏加载动画，为了跟组件里面的 100 毫秒定位有个平缓过度
+				// 		setTimeout(() => {
+				// 			this.loading = false;
+				// 		}, 120);
+				// 	}, 1000)
+				// } else {
+				// 	this.loading = false;
+				// }
+				var that = this;
+				var [error, res] = await uni.request({
+				    url: that.api.baseUrl+that.api.listUrl,
+				    data: {
+				        keyword: that.keyword,
+						pageNo:that.pageNo,
+						pageSize:that.pageSize,
+						type:"topic"
+				    },
+				    header: {
+						'Authority':that.authority
+				    }
+				});
+				console.log("res:",res);
+				var resultList = res.data.data.records;
+				for(var item of resultList){
+					item.picPath = this.api.pre+item.picPath;
 				}
-			}
+				this.list = this.list.concat(resultList);
+				
+			},
+			setToken(){
+				const cacheToken = uni.getStorageSync("token");
+				console.log("cacheToken:",cacheToken);
+				if(cacheToken){
+					this.authority=cacheToken;
+				}else{
+					 this.authority='a050ddf856ea4b0c9c38f10a1692248e'
+					// this.authority='cd8ef7dcd3254932824e30526db19a6c'
+				}
+			},
 		},
 		components: {
 			WaterfallFlow

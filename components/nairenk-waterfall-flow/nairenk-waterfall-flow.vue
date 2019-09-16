@@ -7,14 +7,14 @@
 			:data-index="index"
 			 @click="choose">
 			<view class="pic">
-				<image class="image" mode="widthFix" :src="item.image" style="width: 100%; display: block;" ></image>
+				<image class="image" mode="widthFix" :src="item.picPath" style="width: 100%; display: block;" ></image>
 			</view>
 			<view class="content">
-				<text>{{item.content}}</text>
+				<text>{{item.mark}}</text>
 				<view class="user">
 					<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
-						:src="item.user.avatar"></image>
-					{{item.user.name}}
+						:src="item.picPath"></image>
+					帅大叔
 				</view>
 			</view>
 		</view>
@@ -47,7 +47,8 @@
 				boxHeight: [],
 				top: [], 
 				left: [],
-				loadingTop: 0
+				loadingTop: 0,
+				
 			}
 		},
 		watch: {
@@ -56,6 +57,7 @@
 				this.mark = oldVal.length;
 				if (newVal != oldVal) {
 					this.newList = this.list;
+					console.log("newList:",this.newList);
 					this.$nextTick(function () {
 						setTimeout(() => {
 							this.waterFall();
