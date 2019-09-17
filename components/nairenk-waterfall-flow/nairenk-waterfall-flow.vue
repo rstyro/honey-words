@@ -7,14 +7,14 @@
 			:data-index="index"
 			 @click="choose">
 			<view class="pic">
-				<image class="image" mode="widthFix" :src="item.picPath" style="width: 100%; display: block;" ></image>
+				<image class="image" mode="aspectFill" :src="item.picPath" style="width: 100%; display: block;" ></image>
 			</view>
 			<view class="content">
 				<text>{{item.mark}}</text>
 				<view class="user">
 					<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
 						:src="item.picPath"></image>
-					帅大叔
+					{{item.auther}}
 				</view>
 			</view>
 		</view>
