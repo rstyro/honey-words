@@ -11,6 +11,7 @@
 </template>
 
 <script>
+	import commons from '@/common/commons.js';  
 	import mSearch from '@/components/mehaotian-search/mehaotian-search.vue';
 	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
 	
@@ -53,7 +54,7 @@
 		onReachBottom(){
 			if(this.pages == this.pageNo){
 				console.log("到底了");
-				this.showNoMore();
+				commons.showNoMore();
 				return;
 			}
 			this.pageNo++;
@@ -119,9 +120,9 @@
 						
 				}else if(res.data.status == "70000"){
 					uni.removeStorageSync("token");
-					this.showTokenError();
+					commons.showTokenError();
 				}else{
-					this.requestError();
+					commons.requestError();
 				}
 				uni.hideNavigationBarLoading();
 				uni.stopPullDownRefresh();
@@ -194,35 +195,7 @@
 							console.log(error);
 						}
 				    })
-			},
-			showTokenError(){
-				uni.showModal({
-					title: '提示',
-					content: 'token失效，请重新授权登录',
-					showCancel: false,
-					success: function (res) {
-						if (res.confirm) {
-							console.log('用户点击确定');
-							uni.reLaunch({
-								url: '/pages/auth/auth'
-							});
-						}
-					}
-				});
-			},
-			requestError(){
-				uni.showToast({
-					title: "服务器异常，请求失败",
-					icon: "none"
-				});
-			},
-			showNoMore(){
-				uni.showToast({
-					title: "没有更多的数据了",
-					icon: "none"
-				});
 			}
-			
 		}
 	};
 </script>

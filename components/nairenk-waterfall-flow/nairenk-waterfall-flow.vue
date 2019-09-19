@@ -13,8 +13,8 @@
 				<text>{{item.mark}}</text>
 				<view class="user">
 					<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
-						:src="item.picPath"></image>
-					{{item.auther}}
+						:src="item.picUrl"></image>
+					{{item.nickName}}
 				</view>
 			</view>
 		</view>
