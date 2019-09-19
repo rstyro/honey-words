@@ -54,8 +54,9 @@
 			// 模拟加载数据
 			async getList() {
 				var that = this;
+				var url = commons.baseUrl+that.api.listUrl;
 				var [error, res] = await uni.request({
-				    url: commons.baseUrl+that.api.listUrl,
+				    url: url,
 				    data: {
 				        keyword: that.keyword,
 						pageNo:that.pageNo,

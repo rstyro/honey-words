@@ -31,7 +31,8 @@ function showNoMore(){
 }
 
 export default {
-    baseUrl,  
+    baseUrl,
+	preUrl,
     showTokenError,  
     requestError,
 	showNoMore
