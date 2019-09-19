@@ -30,8 +30,6 @@
 			}
 		},
 		onLoad() {
-			// this.api.baseUrl=getApp().globalData.baseUrl;
-			this.api.baseUrl=commons.baseUrl;
 			this.setToken();
 			this.getList();
 		}, 
@@ -57,7 +55,7 @@
 			async getList() {
 				var that = this;
 				var [error, res] = await uni.request({
-				    url: that.api.baseUrl+that.api.listUrl,
+				    url: commons.baseUrl+that.api.listUrl,
 				    data: {
 				        keyword: that.keyword,
 						pageNo:that.pageNo,
@@ -73,7 +71,7 @@
 				if(res.data.data.pages>0){
 					var resultList = res.data.data.records;
 					for(var item of resultList){
-						item.picPath = this.api.pre+item.picPath;
+						item.picPath =commons.preUrl+item.picPath;
 					}
 					this.list = this.list.concat(resultList);
 				}
