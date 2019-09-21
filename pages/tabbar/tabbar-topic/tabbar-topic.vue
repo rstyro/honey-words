@@ -49,7 +49,12 @@
 			// 选中
 			choose(item) {
 				// item 返回选中 JSON 对象
-				console.log(item)
+				console.log(item);
+				// uni.navigateTo({
+				//     url: '/pages/topic/topic-item/topic-item?topicId='+item.id,
+				//     animationType: 'zoom-out',
+				//     animationDuration: 1000
+				// });
 			},
 			// 模拟加载数据
 			async getList() {

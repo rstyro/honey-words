@@ -62,6 +62,10 @@
             "path" : "pages/menus/setting/setting",
             "style" : {}
         }
+        ,{
+            "path" : "pages/topic/topic-item/topic-item",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

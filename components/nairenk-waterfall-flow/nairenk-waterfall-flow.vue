@@ -6,17 +6,19 @@
 			v-for="(item, index) in newList" :key="index"
 			:data-index="index"
 			 @click="choose">
-			<view class="pic">
-				<image class="image" mode="aspectFill" :src="item.picPath" style="width: 100%; display: block;" ></image>
-			</view>
-			<view class="content">
-				<text>{{item.mark}}</text>
-				<view class="user">
-					<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
-						:src="item.picUrl"></image>
-					{{item.nickName}}
+			<navigator :url="'/pages/topic/topic-item/topic-item?item='+ encodeURIComponent(JSON.stringify(item))">
+				<view class="pic">
+					<image class="image" mode="aspectFill" :src="item.picPath" style="width: 100%; display: block;" ></image>
 				</view>
-			</view>
+				<view class="content">
+					<text>{{item.mark}}</text>
+					<view class="user">
+						<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
+							:src="item.picUrl"></image>
+						{{item.nickName}}
+					</view>
+				</view>
+			</navigator>
 		</view>
 		<view class="loading" v-show="loading" :style="'top: ' + loadingTop + 'px'" >
 			<image src="/static/loading.gif" style="width: 80upx; height: 80upx;"></image>
