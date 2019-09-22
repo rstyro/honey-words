@@ -23,21 +23,21 @@
 	export default {
 		props:{
 			honeyItem:Object,
-			praiseMe: Function,
-			collectMe: Function,
+			// praiseMe: Function,
+			// collectMe: Function,
 			sftId: Number
 		},
 		data() {
-			return {
-				
-			}
+			return {};
 		},
 		methods: {
 			praiseHoneyWords(){
-				this.praiseMe(this.sftId);
+				// this.praiseMe(this.sftId);
+				this.$emit('praiseMe',this.sftId);
 			},
 			collectHoneyWords(){
-				this.collectMe(this.sftId);
+				// this.collectMe(this.sftId);
+				this.$emit('collectMe',this.sftId);
 			}
 		}
 	}

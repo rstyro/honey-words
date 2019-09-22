@@ -6,19 +6,17 @@
 			v-for="(item, index) in newList" :key="index"
 			:data-index="index"
 			 @click="choose">
-			<navigator :url="'/pages/topic/topic-item/topic-item?item='+ encodeURIComponent(JSON.stringify(item))">
-				<view class="pic">
-					<image class="image" mode="aspectFill" :src="item.picPath" style="width: 100%; display: block;" ></image>
+			<view class="pic">
+				<image class="image" mode="aspectFill" :src="item.picPath" style="width: 100%; display: block;" ></image>
+			</view>
+			<view class="content">
+				<text>{{item.mark}}</text>
+				<view class="user">
+					<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
+						:src="item.picUrl"></image>
+					{{item.nickName}}
 				</view>
-				<view class="content">
-					<text>{{item.mark}}</text>
-					<view class="user">
-						<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
-							:src="item.picUrl"></image>
-						{{item.nickName}}
-					</view>
-				</view>
-			</navigator>
+			</view>
 		</view>
 		<view class="loading" v-show="loading" :style="'top: ' + loadingTop + 'px'" >
 			<image src="/static/loading.gif" style="width: 80upx; height: 80upx;"></image>
@@ -58,6 +56,11 @@
 			list: function (newVal, oldVal) {
 				this.mark = oldVal.length;
 				if (newVal != oldVal) {
+					//下拉刷新的时候初始化
+					if(this.mark == 0){
+						this.boxHeight=[];
+						this.top=[];
+					}
 					this.newList = this.list;
 					console.log("newList:",this.newList);
 					this.$nextTick(function () {
@@ -104,6 +107,15 @@
 			choose(e) {
 				let index = e.currentTarget.dataset.index;
 				this.$emit('click', this.newList[index]);
+			},
+			changeFlag(index,flag){
+				console.log("index:",index);
+				console.log("flag:",flag);
+				if(flag == "praise"){
+					this.newList[index].praiseFlag=!this.newList[index].praiseFlag;
+				}else{
+					this.newList[index].collectFlag=!this.newList[index].collectFlag;
+				}
 			}
 		}
 	}
@@ -113,7 +125,7 @@
 	.flow-box {
 		position: relative;
 		color: #1a1a1a;
-		padding-bottom: var(--window-bottom);
+		/* padding-bottom: var(--window-bottom); */
 	}
 	.flow-box .item {
 		position: absolute;

@@ -9,5 +9,3 @@ const app = new Vue({
     ...App
 })
 app.$mount()
-
-Vue.prototype.$baseUrl = 'http://localhost:8689/';

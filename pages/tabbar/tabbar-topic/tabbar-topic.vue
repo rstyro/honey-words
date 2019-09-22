@@ -1,9 +1,8 @@
 <template>
 	<view class="content">
 		<view class="app">
-		        <WaterfallFlow :list="list" :loading="loading" @click="choose" ></WaterfallFlow>
+		    <WaterfallFlow :list="list" :loading="loading" @click="choose"></WaterfallFlow>
 		</view>
-		<view style="text-align: center;">我是有底线的</view>
 	</view>
 </template>
 
@@ -18,21 +17,22 @@
 				authority:'',
 				list: [], // 列表
 				pageNo:1,
-				pageSize:4,
-				pages:0,
-				api:{
-					baseUrl:"http://localhost:8689",
-					listUrl:"/pua/speechcraftType/list",
-					praiseUrl:"/pua/praise/praiseMe",
-					collectUrl:"/pua/collect/collectMe",
-					pre:"https://www.lrshuai.top/miniadmin/show"
-				},
+				pageSize:10,
+				pages:0
 			}
 		},
 		onLoad() {
 			this.setToken();
 			this.getList();
 		}, 
+		//下拉刷新
+		onPullDownRefresh:function(){
+		  this.pageNo=1;
+		  this.loading = true;
+		  // 清空数组
+		  this.list.splice(0,this.list.length);
+		  this.getList();
+		 },
 		onReachBottom() {
 			if(this.pages == this.pageNo){
 				commons.showNoMore();
@@ -44,23 +44,25 @@
 			this.pageNo++;
 			this.getList();
 		},
-		
+		components: {
+			WaterfallFlow
+		},
 		methods: {
 			// 选中
 			choose(item) {
 				// item 返回选中 JSON 对象
-				console.log(item);
-				// uni.navigateTo({
-				//     url: '/pages/topic/topic-item/topic-item?topicId='+item.id,
-				//     animationType: 'zoom-out',
-				//     animationDuration: 1000
-				// });
+				console.log("chooose:",item);
+				uni.navigateTo({
+				    url: '/pages/topic/topic-item/topic-item?topicId='+item.id,
+				    animationType: 'zoom-out',
+				    animationDuration: 1000
+				});
 			},
 			// 模拟加载数据
-			async getList() {
+			getList() {
 				var that = this;
-				var url = commons.baseUrl+that.api.listUrl;
-				var [error, res] = await uni.request({
+				var url = commons.baseUrl+commons.puaTopicListUrl;
+				uni.request({
 				    url: url,
 				    data: {
 				        keyword: that.keyword,
@@ -71,35 +73,36 @@
 				    header: {
 						'Authority':that.authority
 				    }
+				}).then(data=>{
+					 var [error, res]  = data;
+					 console.log("res:",res);
+					 console.log("error:",error);
+					 if (typeof(res) != "undefined" && res.statusCode == 200 && res.data.status == 200){
+					 	that.pages=res.data.data.pages;
+					 	if(res.data.data.pages>0){
+					 		var resultList = res.data.data.records;
+					 		for(var item of resultList){
+					 			item.picPath =commons.preUrl+item.picPath;
+					 		}
+					 		this.list = this.list.concat(resultList);
+					 	}
+					 }
+					 uni.stopPullDownRefresh();
 				});
-				console.log("res:",res);
-				this.pages=res.data.data.pages;
-				if(res.data.data.pages>0){
-					var resultList = res.data.data.records;
-					for(var item of resultList){
-						item.picPath =commons.preUrl+item.picPath;
-					}
-					this.list = this.list.concat(resultList);
-				}
 				
 			},
 			setToken(){
 				const cacheToken = uni.getStorageSync("token");
-				console.log("cacheToken:",cacheToken);
 				if(cacheToken){
 					this.authority=cacheToken;
-				}else{
-					 this.authority='a050ddf856ea4b0c9c38f10a1692248e'
-					// this.authority='cd8ef7dcd3254932824e30526db19a6c'
 				}
-			},
-		},
-		components: {
-			WaterfallFlow
+			}
 		}
 	}
 </script>
 
 <style>
-
+	.app{
+		border-radius: 50upx;
+	}
 </style>

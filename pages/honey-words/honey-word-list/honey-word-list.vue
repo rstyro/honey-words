@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<honeyItem v-for="(item,index) in honeyList" :key="item.id" 
-		:sftId="item.id" :honeyItem="item" :praiseMe="praiseMe" :collectMe="collectMe"></honeyItem>
+		:sftId="item.id" :honeyItem="item" @praiseMe="praiseMe" @collectMe="collectMe"></honeyItem>
 	</view>
 </template>
 
@@ -10,8 +10,8 @@
 	export default {
 		props:{
 			honeyList:Array,
-			collectMe:Function,
-			praiseMe:Function
+			// collectMe:Function,
+			// praiseMe:Function
 		},
 		data() {
 			return {
@@ -22,7 +22,15 @@
 			honeyItem
 		},
 		methods: {
-			
+			praiseMe(id){
+				// this.praiseMe(this.sftId);
+				console.log("list-praiseMe");
+				this.$emit('praiseMe',id);
+			},
+			collectMe(id){
+				// this.collectMe(this.sftId);
+				this.$emit('collectMe',id);
+			}
 		}
 	}
 </script>
