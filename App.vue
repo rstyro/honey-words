@@ -2,7 +2,7 @@
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
-		uni.setStorageSync("token","7f34e01a99c14f858f3423861fdd1cb5");
+		this.setInit();
 		setTimeout(() => {
 			uni.setTabBarBadge({
 				index: 2,
@@ -18,6 +18,32 @@ export default {
 	},
 	onHide: function() {
 		console.log('App Hide');
+	},
+	methods:{
+		setInit(){
+			console.log("初始化信息");
+			uni.setStorageSync("token","a5e4443a85d7443da751fd7e6558d55b");
+			var userInfo={
+					"userId": 1,
+					"nickName": "帅大叔",
+					"picUrl": "https://wx.qlogo.cn/mmopen/vi_32/qU4nEGe21CbuXP7FoHtbvWLKTJKibnDXKZ1A53nMsJcPsl6u8tRqeOXNObRnoy85waq4LCdFUXzh6iaOQPPpAqicg/132",
+					"picId": "9bbbb6119f0c4a3bbd8873fd630552e8",
+					"sex": 1,
+					"sign": '1',
+					"city": "Shenzhen",
+					"province": "Guangdong",
+					"country": "China",
+					"openid": "ohgIn0RxU52FLnN-53PvwRapq_ac",
+					"email": 'null',
+					"phone": 'null',
+					"status": "on",
+					"birthday": 'null',
+					"ip": 'null',
+					"isDel": 0,
+					"createTime": "2019-09-22 16:49:04"
+				}
+			uni.setStorageSync("userInfo",userInfo);
+		}
 	}
 };
 </script>

@@ -6,16 +6,15 @@
 </template>
 
 <script>
+	import commons from '@/common/commons.js';  
 	export default {
 		data() {
 			return {
-				token:'',
-				userInfo:'',
-				header: {"content-type": "application/x-www-form-urlencoded","Authority":''},
+				authority:'',
+				userInfo:''
 			}
 		},
 		onLoad() {
-			console.log("baseUrl:",getApp().globalData.baseUrl);
 			this.init();
 		},
 		methods: {
@@ -37,9 +36,12 @@
 					       console.log("login-loginRes:",JSON.stringify(loginRes));
 						   // 请求自己的服务器
 						   uni.request({
-						       url: getApp().globalData.baseUrl+'/pua/users/login',
+						       url: commons.baseUrl+'/pua/users/login',
 							   method:"POST",
-							   header:that.header,
+							   header: {
+								   "content-type": "application/x-www-form-urlencoded",
+								   "Authority":that.authority,
+								   },
 						       data: {
 						   		code: loginRes.code,
 						   		nickName: tagUserInfo.nickName,
@@ -69,13 +71,18 @@
 			// 自动登陆
 			autoLogin:function(){
 				var that = this;
+				console.log("header:",that.header);
+				console.log("authority:",that.authority);
 			   // 请求自己的服务器
 			   uni.request({
-				   url: getApp().globalData.baseUrl+'/pua/users/autoLogin',
+				   url: commons.baseUrl+'/pua/users/autoLogin',
 				   method:"POST",
-				   header: that.header,
+				   header: {
+						   "content-type": "application/x-www-form-urlencoded",
+						   "Authority":that.authority,
+					},
 				   dataType: "json",
-				   data: {'Authority':that.token},
+				   data: {'Authority':that.authority},
 				   success: (res) => {
 					   console.log(res,"<<=res");
 						if(res.statusCode == 200 && res.data.status == 200){
@@ -100,8 +107,7 @@
 				const catchToken = uni.getStorageSync("token");
 				console.log("catchToken:",catchToken);
 				if(catchToken){
-					this.token=catchToken;
-					this.header.Authority=catchToken;
+					this.authority=catchToken;
 					this.autoLogin();
 				}
 			},
