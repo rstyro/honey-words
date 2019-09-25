@@ -15,6 +15,10 @@
 	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
 	
 	export default {
+		components: {
+			mSearch,
+			honeyList
+		},
 		data() {
 			return {
 				list:[],
@@ -48,10 +52,7 @@
 			this.pageNo++;
 			this.getList();
 		},
-		components: {
-			mSearch,
-			honeyList
-		},
+
 		methods: {
 			search(val) {
 				this.keyword=val;

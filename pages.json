@@ -35,27 +35,43 @@
         
         ,{
             "path" : "pages/menus/reward/reward",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "打赏"
+			}
         }
         ,{
             "path" : "pages/menus/feedback/feedback",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "反馈"
+			}
         }
         ,{
             "path" : "pages/menus/about/about",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "关于"
+			}
         }
         ,{
             "path" : "pages/menus/collect/collect",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "收藏"
+			}
         }
         ,{
             "path" : "pages/menus/publish-message/publish-message",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "发布消息"
+			}
         }
         ,{
             "path" : "pages/menus/system-message/system-message",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "系统消息",
+				"disableScroll":true,
+				"app-plus":{
+				"bounce":"none"
+				}
+			}
         }
         ,{
             "path" : "pages/menus/setting/setting",

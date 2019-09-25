@@ -1,20 +1,14 @@
 <script>
+	import commons from '@/common/commons.js'; 
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
 		this.setInit();
-		setTimeout(() => {
-			uni.setTabBarBadge({
-				index: 2,
-				text: '31'
-			});
-			uni.showTabBarRedDot({
-				index: 0
-			});
-		}, 1000);
+		
 	},
 	onShow: function() {
 		console.log('App Show');
+		this.getSysMsg();
 	},
 	onHide: function() {
 		console.log('App Hide');
@@ -43,6 +37,24 @@ export default {
 					"createTime": "2019-09-22 16:49:04"
 				}
 			uni.setStorageSync("userInfo",userInfo);
+		},
+		getSysMsg(){
+			const cacheToken = uni.getStorageSync("token");
+			if(cacheToken){
+				var res = commons.getMsgAmount(cacheToken);
+				if(res){
+					if(res.statusCode == 200 && res.data.status == 200){
+						console.log("msg-res:",res);
+						const amount = res.data.data;
+						if(amount > 0){
+							uni.setTabBarBadge({
+								index: 2,
+								text: ''+amount
+							});
+						}
+					}
+				}
+			}
 		}
 	}
 };

@@ -54,6 +54,7 @@
 							   success: (res) => {
 								   console.log("login-res:",res);
 									if(res.statusCode == 200 && res.data.status == 200){
+										that.showRedDot(res.data.msgCount);
 										//保存token到本地
 										that.saveDataToStorage(res.data);
 									}
@@ -88,6 +89,7 @@
 						if(res.statusCode == 200 && res.data.status == 200){
 							//保存token到本地
 							that.saveDataToStorage(res.data);
+							that.showRedDot(res.data.msgCount);
 						}else if(res.data.status == "70000"){
 							uni.showToast({
 								title: "token失效，请重新授权登录",
@@ -123,6 +125,15 @@
 				uni.switchTab({
 				    url: '/pages/tabbar/tabbar-home/tabbar-home'
 				});
+			},
+			showRedDot:function(amount){
+				console.log("red-dot:",amount);
+				if(amount> 0){
+					uni.setTabBarBadge({
+						index: 2,
+						text: ''+amount
+					});
+				}
 			},
 			showError: function(){
 				uni.showToast({

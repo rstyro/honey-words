@@ -11,6 +11,9 @@
 	// 瀑布流组件
 	import WaterfallFlow from '@/components/nairenk-waterfall-flow/nairenk-waterfall-flow.vue';
 	export default {
+		components: {
+			WaterfallFlow
+		},
 		data() {
 			return {
 				loading: true,
@@ -44,9 +47,7 @@
 			this.pageNo++;
 			this.getList();
 		},
-		components: {
-			WaterfallFlow
-		},
+
 		methods: {
 			// 选中
 			choose(item) {

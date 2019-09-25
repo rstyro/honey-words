@@ -34,6 +34,7 @@
 </template>
 
 <script>
+	import commons from '@/common/commons.js';  
 	export default {
 		data() {
 			return {

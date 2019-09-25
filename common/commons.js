@@ -136,6 +136,23 @@ const collect = function(url,authority,tableId,tableType,list){
 			}
 		})
 }
+
+const getMsgAmount=function(authority){
+	uni.request({
+	   url: baseUrl+'/sys/sysmsg/getMsgAmount',
+	   method:"GET",
+	   header: {
+		   "content-type": "application/x-www-form-urlencoded",
+		   "Authority":authority,
+		   },
+	    data: {},
+	   success: (res) => {
+		   return res;
+	    },fail(error) {
+		   return error;
+	    }
+	});
+}
 			
 export default {
     baseUrl,
@@ -153,4 +170,5 @@ export default {
 	showNoMore,
 	praise,
 	collect,
+	getMsgAmount,
 }
