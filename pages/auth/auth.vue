@@ -29,6 +29,7 @@
 					return false;
 				}else{
 					var tagUserInfo = res.detail.userInfo;
+					console.log("tagUserinfo:",tagUserInfo);
 					// 微信登陆，获取一个Code，发送到后台获取openId
 					uni.login({
 					   provider: 'weixin',

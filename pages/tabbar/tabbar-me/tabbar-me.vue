@@ -23,7 +23,7 @@
 
 			</view>
 			<view class="center_menu">
-				<view class="menu_item" v-for="item in menus" :key="item.key" @click="menuClick(item.key)">
+				<view class="menu_item" v-for="item in menus" :key="item.key" @click="menuClick(item.key)" v-if="item.isShow">
 					<image :src="item.icon" mode="aspectFill"></image>
 					<text>{{item.name}}</text>
 					<text v-if="item.redDot" class="messageRedDot"></text>
@@ -59,32 +59,37 @@
 						key: 1,
 						name: '发布消息',
 						icon: '/static/img/publish.png',
-						redDot:false
+						redDot:false,
+						isShow: false
 					},
 					{
 						key: 2,
 						name: '系统消息',
 						icon: '/static/img/me/message.png',
-						redDot:true
+						redDot:true,
+						isShow: true
 					},
 					{
 						name: '清除缓存',
 						icon: '/static/img/clean.png',
 						key: 3,
-						redDot:false
+						redDot:false,
+						isShow: true
 					},
 					
 					{
 						name: '意见反馈',
 						icon: '/static/img/feedback.png',
 						key: 4,
-						redDot:false
+						redDot:false,
+						isShow: true
 					},
 					{
 						name: '关于我',
 						icon: '/static/img/about.png',
 						key: 5,
-						redDot:false
+						redDot:false,
+						isShow: true
 					}
 
 				],
@@ -95,15 +100,26 @@
 			};
 		},
 		onLoad() {
-			const userInfo = uni.getStorageSync("userInfo");
-			if(userInfo){
-				this.userInfo=userInfo;
-			}else{
-				//this.showTokenError();
-			}
-			console.log("userInfo:",userInfo);
+			this.init();
 		},
+		//下拉刷新
+		onPullDownRefresh:function(){
+		  this.init();
+		 },
 		methods: {
+			init(){
+				const userInfo = uni.getStorageSync("userInfo");
+				if(userInfo){
+					this.userInfo=userInfo;
+					if(this.userInfo.userId == 1){
+						this.menus[0].isShow=true;
+					}
+				}else{
+					this.showTokenError();
+				}
+				uni.stopPullDownRefresh();
+				console.log("userInfo:",userInfo);
+			},
 			showTokenError(){
 				uni.showModal({
 					title: '提示',
@@ -153,14 +169,14 @@
 			},
 			settingPage(){
 				uni.navigateTo({
-				    url: '/pages/menus/setting/setting',
+				    url: '/pages/tabbar/tabbar-me/menus/setting/setting',
 				    animationType: 'pop-in',
 				    animationDuration: 1000
 				});
 			},
 			collectPage(){
 				uni.navigateTo({
-				    url: '/pages/menus/collect/collect',
+				    url: '/pages/tabbar/tabbar-me/menus/collect/collect',
 				    animationType: 'pop-in',
 				    animationDuration: 1000
 				});
@@ -173,21 +189,21 @@
 			},
 			rewardMoney(){
 				uni.navigateTo({
-				    url: '/pages/menus/reward/reward',
+				    url: '/pages/tabbar/tabbar-me/menus/reward/reward',
 				    animationType: 'pop-in',
 				    animationDuration: 1000
 				});
 			},
 			publishMessage(){
 				uni.navigateTo({
-				    url: '/pages/menus/publish-message/publish-message',
+				    url: '/pages/tabbar/tabbar-me/menus/publish-message/publish-message',
 				    animationType: 'zoom-out',
 				    animationDuration: 1000
 				});
 			},
 			systemMessage(){
 				uni.navigateTo({
-				    url: '/pages/menus/system-message/system-message',
+				    url: '/pages/tabbar/tabbar-me/menus/system-message/system-message',
 				    animationType: 'zoom-out',
 				    animationDuration: 1000
 				});
@@ -202,14 +218,14 @@
 			},
 			feedback(){
 				uni.navigateTo({
-				    url: '/pages/menus/feedback/feedback',
+				    url: '/pages/tabbar/tabbar-me/menus/feedback/feedback',
 				    animationType: 'zoom-out',
 				    animationDuration: 1000
 				});
 			},
 			aboutMe(){
 				uni.navigateTo({
-				    url: '/pages/menus/about/about',
+				    url: '/pages/tabbar/tabbar-me/menus/about/about',
 				    animationType: 'fade-in',
 				    animationDuration: 1000
 				});

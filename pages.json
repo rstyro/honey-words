@@ -34,51 +34,56 @@
         }
         
         ,{
-            "path" : "pages/menus/reward/reward",
+            "path" : "pages/tabbar/tabbar-me/menus/reward/reward",
             "style" : {
-				"navigationBarTitleText": "打赏"
+				"navigationBarTitleText": "打赏",
+				"enablePullDownRefresh": false
 			}
         }
         ,{
-            "path" : "pages/menus/feedback/feedback",
+            "path" : "pages/tabbar/tabbar-me/menus/feedback/feedback",
             "style" : {
-				"navigationBarTitleText": "反馈"
+				"navigationBarTitleText": "反馈",
+				"enablePullDownRefresh": false
 			}
         }
         ,{
-            "path" : "pages/menus/about/about",
+            "path" : "pages/tabbar/tabbar-me/menus/about/about",
             "style" : {
-				"navigationBarTitleText": "关于"
+				"navigationBarTitleText": "关于",
+				"enablePullDownRefresh": false
 			}
         }
         ,{
-            "path" : "pages/menus/collect/collect",
+            "path" : "pages/tabbar/tabbar-me/menus/collect/collect",
             "style" : {
 				"navigationBarTitleText": "收藏"
 			}
         }
         ,{
-            "path" : "pages/menus/publish-message/publish-message",
+            "path" : "pages/tabbar/tabbar-me/menus/publish-message/publish-message",
             "style" : {
-				"navigationBarTitleText": "发布消息"
+				"navigationBarTitleText": "发布消息",
+				"enablePullDownRefresh": false
 			}
         }
         ,{
-            "path" : "pages/menus/system-message/system-message",
+            "path" : "pages/tabbar/tabbar-me/menus/system-message/system-message",
             "style" : {
 				"navigationBarTitleText": "系统消息",
 				"disableScroll":true,
 				"app-plus":{
-				"bounce":"none"
-				}
+					"bounce":"none"
+				},
+				"enablePullDownRefresh": false
 			}
         }
         ,{
-            "path" : "pages/menus/setting/setting",
+            "path" : "pages/tabbar/tabbar-me/menus/setting/setting",
             "style" : {}
         }
         ,{
-            "path" : "pages/topic/topic-item/topic-item",
+            "path" : "pages/tabbar/tabbar-topic/topic/topic-item/topic-item",
             "style" : {}
         }
     ],
