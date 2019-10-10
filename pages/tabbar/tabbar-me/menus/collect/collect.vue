@@ -1,94 +1,128 @@
 <template>
 	<view>
-<!-- 		<view class="p10">普通使用</view>
-		<sun-tab :value.sync="index" :tabList="tabList"></sun-tab>
-		<view class="p10">更换颜色</view>
-		<sun-tab :value.sync="index" @change="arrayChange" :tabList="tabColorList" activeColor="#f37b1d" defaultColor="#FFFFFF" bgColor="#1e9fff"></sun-tab>
-		<view class="p10">使用icon</view>
-		<sun-tab :value.sync="index" :tabList="tabIconList" rangeKey="name"></sun-tab>
-		<view class="p10">对象赋值</view>
-		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name"></sun-tab>
-		<view class="p10">横向滚动</view>
-		<sun-tab :value.sync="tabScrollIndex" :tabList="tabScrollList" :scroll="true"></sun-tab>
-		<view class="p10">搭配滑块使用</view> -->
-		<!-- <sun-tab :value.sync="swiperIndex" :tabList="tabSwiperList"></sun-tab> -->
-		<swiper :current="swiperIndex" duration="300" :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
-			<swiper-item v-for="(swiper,index) in tabSwiperList" :key="index">
-				<view style="margin: 20px;background-color: #FFFFFF;text-align: center;">{{swiper}}</view>
-			</swiper-item>
-		 </swiper>
+		<view class="box">
+			<QSTabs :current="current" duration="1" animationMode="line2" :tabs="tabs" width="375" @change="change($event, '1')"/>
+		</view>
+		<view v-if="current == 0">
+			<view>
+				<text v-if="isNull"  class="null-data">暂无数据</text>
+				<view v-else class="honey-list-box" >
+					<honeyList  :honeyList="list" @praiseMe="praiseHoney" @collectMe="collectHoney" ></honeyList>
+				</view>
+			</view>
+		</view>
+		<view v-else>
+			<view class="topic-box">
+				
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
-	import sunTab from '@/components/sun-tab/sun-tab.vue';
+	import commons from '@/common/commons.js';
+	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
+	import QSTabs from '@/components/QS-tabs/QS-tabs.vue';
 	export default {
 		components: {
-			sunTab
+			QSTabs,
+			honeyList
 		},
 		data() {
 			return {
-				index: 0,
-				swiperIndex:0,
-				tabList: ['选项卡一','选项卡二','选项卡三'],
-				tabColorList: ['选项卡一','选项卡二','选项卡三选项卡三项卡三'],
-				tabIconList: [
-					{
-						name: '男',
-						icon: 'iconnan',
-					},
-					{
-						name: '女',
-						icon: 'iconziyuan',
-					},
-					{
-						name: '儿童',
-						icon: 'icon10',
-					}
+				authority:'',
+				current:0,
+				tabs: [
+					{ name: '单句', backgroundColor: '#000', activeColor: '#fff'}, 
+					{ name: '主题', backgroundColor: '#000', activeColor: '#fff'}, 
 				],
-				tabObjectList: [
-					{
-						name: '选项卡一',
-						value: 1
-					},
-					{
-						name: '选项卡二',
-						value: 2
-					},
-					{
-						name: '选项卡三',
-						value: 3
-					}
-				],
-				tabScrollIndex: 0,
-				tabScrollList: ['选项卡一','选项卡二选项卡二','选项卡三','选项卡四','选项卡五选项卡五选项卡五','选项卡六','选项卡七','选项卡八'],
-				tabSwiperList: ['A','B','C'],
+				list:[],
+				isNull:true,
+				pageNo:1111,
+				pageSize:10,
+				pages:0
 			}
 		},
 		onLoad() {
-
+			this.setToken();
+			this.getList();
 		},
 		methods: {
-			arrayChange(e){
-				console.log('数组数据返回格式');
-				console.log(e);
+			change(index, i) {
+				this['current'] = index;
 			},
-			objectChange(e){
-				console.log('对象数据返回格式');
-				console.log(e);
+			setToken(){
+				const cacheToken = uni.getStorageSync("token");
+				console.log("cacheToken:",cacheToken);
+				if(cacheToken){
+					this.authority=cacheToken;
+				}
 			},
-			swiperChange(e){
-				this.swiperIndex = e.target.current;
-			}
+			getList(){
+				uni.showNavigationBarLoading();
+				var that = this;
+				uni.request({
+				    url: commons.baseUrl+commons.puaListUrl,
+				    data: {
+						pageNo:that.pageNo,
+						pageSize:that.pageSize,
+						topicId:that.id
+				    },
+				    header: {
+						'Authority':that.authority
+				    }
+				}).then(data=>{
+					var [error, res] = data;
+					console.log("res:",res);
+					if(error){
+						console.log(error);
+					}
+					if(res.data.status == 200){
+						console.log("list:",res.data.data.records);
+						if(this.pageNo == 1){
+							uni.pageScrollTo({
+							    scrollTop: 0,
+							    duration: 30
+							});
+						}
+						
+						this.pages=res.data.data.pages;
+						if(res.data.data.pages>0){
+							this.isNull=false;
+							this.list = this.list.concat(res.data.data.records);
+						}else{
+							this.isNull=true;
+						}
+							
+					}else if(res.data.status == "70000"){
+						uni.removeStorageSync("token");
+						commons.showTokenError();
+					}else{
+						commons.requestError();
+					}
+					uni.hideNavigationBarLoading();
+					uni.stopPullDownRefresh();
+				});
+				
+			},
+			praiseHoney(id){
+				commons.praise(commons.baseUrl+commons.praiseUrl,this.authority,id,commons.sftType,this.list);
+			},
+			collectHoney(id){
+				commons.collect(commons.baseUrl+commons.collectUrl,this.authority,id,commons.sftType,this.list);
+			},
 		}
 	}
 </script>
 <style lang="scss">
-	uni-page-body{
-		background-color: #f4f4f4;
-	}
 	.p10{
 		padding: 10px;
 		font-size: 16px;
+	}
+	.null-data{
+	  position: absolute;
+	  top: 15%;
+	  width: 100%;
+	  text-align: center;
 	}
 </style>
