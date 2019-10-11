@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="content">
 		<view class="box">
 			<QSTabs :current="current" duration="1" animationMode="line2" :tabs="tabs" width="375" @change="change($event, '1')"/>
 		</view>
@@ -12,19 +12,20 @@
 			</view>
 		</view>
 		<view v-else>
-			<view class="topic-box">
-				<view v-for="(item,index) in topicList" class="topic-item row-box">
+			<text v-if="topicIsNull"  class="null-data">暂无数据</text>
+			<view v-else class="topic-box">
+				<view v-for="(item,index) in topicList" class="topic-item row-box" @click="toTopicDetail(item.id)">
 					<view class="flex1">
-						<image :src="item.picPath" mode="aspectFit" class="item-cover"></image>
+						<image :src="item.picPath" mode="aspectFill" class="topic-cover"></image>
 					</view>
 					<view class="flex1">
 						<view class="col-box">
-							<text class="flex1">{{item.name}}</text>
-							<text class="flex1">{{item.count}}</text>
+							<view class="flex1 topic-text">{{item.name}}</view>
+							<view class="flex1 topic-text">{{item.count}}</view>
 						</view>
 					</view>
 					<view class="flex1">
-						<image src="/static/img/me/right.png" mode="aspectFit" class="image-right"></image>
+						<image src="/static/img/me/right.png" mode="aspectFit" class="topic-right"></image>
 					</view>
 				</view>
 			</view>
@@ -44,46 +45,57 @@
 		data() {
 			return {
 				authority:'',
-				current:0,
+				current: 0,
+				currentType:'speechcraft',
 				tabs: [
 					{ name: '单句', backgroundColor: '#000', activeColor: '#fff'}, 
 					{ name: '主题', backgroundColor: '#000', activeColor: '#fff'}, 
 				],
 				list:[],
-				topicList:[{
-					"id": 17,
-					"pic_id": null,
-					"code": "yidi",
-					"name": "异地恋",
-					"mark": "只有经历过异地恋的人才知道，原来思念也可以深入骨髓。当见面的那一刻，如洪水决堤，囤积已久的思念终于得到了释放。",
-					"praiseNum": 68439,
-					"collectNum": 3423,
-					"count": 10,
-					"isDel": 0,
-					"createBy": 1,
-					"createTime": "2019-09-21 23:48:52",
-					"picPath": "https://www.lrshuai.top/miniadmin/show/20190921/F13C549F43A449D787ACA1A10672EFA7.jpg",
-					"userPath": "http://www.lrshuai.top/upload/user/20170612/05976238.png",
-					"praiseFlag": false,
-					"collectFlag": false,
-					"nickName": "帅大叔",
-					"picUrl": "https://www.lrshuai.top/upload/user/20170612/05976238.png",
-					"top": 920.1553955078125,
-					"left": 1
-				}],
+				topicList:[],
 				isNull:true,
-				pageNo:1111,
+				topicIsNull:true,
+				pageNo:1,
 				pageSize:10,
-				pages:0
+				pages:0,
+				topicPageNo:1,
+				topicPageSize:10,
+				topicPages:0
 			}
 		},
 		onLoad() {
 			this.setToken();
-			this.getList();
+			this.getList("topic,speechcraft",this.pageNo,this.pageSize);
+		},
+		// 页面上拉触底事件的处理函数
+		onReachBottom(){
+			if(this.currentType == commons.sftType){
+				if(this.pages == this.pageNo){
+					console.log("到底了");
+					commons.showNoMore();
+					return;
+				}
+				this.pageNo++;
+				this.getList("speechcraft",this.pageNo,this.pageSize);
+			}else{
+				if(this.topicPages == this.topicPageNo){
+					console.log("到底了");
+					commons.showNoMore();
+					return;
+				}
+				this.topicPageNo++;
+				this.getList("topic",this.topicPageNo,this.topicPageSize);
+			}
+			
 		},
 		methods: {
 			change(index, i) {
 				this['current'] = index;
+				if(index == 0){
+					this.currentType=commons.sftType;
+				}else{
+					this.currentType=commons.topicType;
+				}
 			},
 			setToken(){
 				const cacheToken = uni.getStorageSync("token");
@@ -92,15 +104,15 @@
 					this.authority=cacheToken;
 				}
 			},
-			getList(){
+			getList(type,pageNo,pageSize){
 				uni.showNavigationBarLoading();
 				var that = this;
 				uni.request({
-				    url: commons.baseUrl+commons.puaListUrl,
+				    url: commons.baseUrl+commons.collectListUrl,
 				    data: {
-						pageNo:that.pageNo,
-						pageSize:that.pageSize,
-						topicId:that.id
+						pageNo:pageNo,
+						pageSize:pageSize,
+						type:type
 				    },
 				    header: {
 						'Authority':that.authority
@@ -112,22 +124,33 @@
 						console.log(error);
 					}
 					if(res.data.status == 200){
-						console.log("list:",res.data.data.records);
-						if(this.pageNo == 1){
-							uni.pageScrollTo({
-							    scrollTop: 0,
-							    duration: 30
-							});
+						//单句
+						if(res.data.speechcraft){
+							this.pages=res.data.speechcraft.pages;
+							if(res.data.speechcraft.pages>0){
+								this.isNull=false;
+								this.list = this.list.concat(res.data.speechcraft.records);
+							}else{
+								this.isNull=true;
+							}
 						}
 						
-						this.pages=res.data.data.pages;
-						if(res.data.data.pages>0){
-							this.isNull=false;
-							this.list = this.list.concat(res.data.data.records);
-						}else{
-							this.isNull=true;
+						//主题
+						if(res.data.topic){
+							this.topicPages=res.data.topic.pages;
+							if(res.data.topic.pages>0){
+								this.topicIsNull=false;
+								var resultList = res.data.topic.records;
+								for(var item of resultList){
+									item.picPath =commons.preUrl+item.picPath;
+								}
+								console.log("resultList:",resultList);
+								this.topicList = this.topicList.concat(resultList);
+							}else {
+								this.topicIsNull=true;
+							}
 						}
-							
+						
 					}else if(res.data.status == "70000"){
 						uni.removeStorageSync("token");
 						commons.showTokenError();
@@ -145,13 +168,19 @@
 			collectHoney(id){
 				commons.collect(commons.baseUrl+commons.collectUrl,this.authority,id,commons.sftType,this.list);
 			},
+			toTopicDetail(id){
+				uni.navigateTo({
+				    url: '/pages/tabbar/tabbar-topic/topic/topic-item/topic-item?topicId='+id,
+				    animationType: 'zoom-out',
+				    animationDuration: 1000
+				});
+			}
 		}
 	}
 </script>
 <style lang="scss">
-	.p10{
-		padding: 10px;
-		font-size: 16px;
+	.content{
+		background: #efeff1;
 	}
 	.null-data{
 	  position: absolute;
@@ -161,17 +190,25 @@
 	}
 	.topic-item{
 		height: 200upx;
+		width: 100%;
 		position: relative;
+		background: #fff;
+		border-bottom: #eee 1px solid;
+		padding: 10upx;
 	}
-	.item-cover{
+	.topic-cover{
 		width: 100%;
 		height: 100%;
-		background: #1A1A1A;
 	}
-	.image-right{
+	.topic-right{
 		width: 30upx;
 		height: 30upx;
 		position: absolute;
 		right: 5%;
+		top: 50%;
+	}
+	.topic-text{
+		text-align: left;
+		padding: 20upx;
 	}
 </style>

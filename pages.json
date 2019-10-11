@@ -57,7 +57,8 @@
         ,{
             "path" : "pages/tabbar/tabbar-me/menus/collect/collect",
             "style" : {
-				"navigationBarTitleText": "收藏"
+				"navigationBarTitleText": "收藏",
+				"enablePullDownRefresh": false
 			}
         }
         ,{

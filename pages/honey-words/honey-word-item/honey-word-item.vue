@@ -15,17 +15,36 @@
 				<image v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/collect.png"></image>
 				<image v-else class="honey-item-icon" src="/static/img/collect-active.png"></image>
 			</view>
+			<view class="col-box">
+				<view class="honey-item-collect-animate1">
+					<vue-star class="honey-item-collect-animate" v-if="!honeyItem.collectFlag" animate="animated bounceIn" color="rgb(152, 138, 222)">
+					    <img slot="icon" class="honey-item-icon" src="/static/img/collect.png" />
+					</vue-star>
+					<vue-star class="honey-item-collect-animate" v-else animate="animated bounceIn" color="rgb(152, 138, 222)">
+					    <img slot="icon" class="honey-item-icon" src="/static/img/collect-active.png" />
+					</vue-star>
+				</view>
+				
+				
+				
+			</view>
+			
 		</view>
 	</view>
 </template>
 
 <script>
+	import VueStar from '@/components/VueStar/VueStar.vue';
+	
 	export default {
 		props:{
 			honeyItem:Object,
 			// praiseMe: Function,
 			// collectMe: Function,
 			sftId: Number
+		},
+		components: {
+			VueStar
 		},
 		data() {
 			return {};
@@ -100,6 +119,9 @@
 		  padding: 8rpx 25rpx;
 		  border-radius: 4rpx;
 		  margin-left: 30rpx;
+	}
+	.honey-item-collect-animate1{
+		background: #007AFF;
 	}
 	
 </style>
