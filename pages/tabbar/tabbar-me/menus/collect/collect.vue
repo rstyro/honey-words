@@ -13,7 +13,20 @@
 		</view>
 		<view v-else>
 			<view class="topic-box">
-				
+				<view v-for="(item,index) in topicList" class="topic-item row-box">
+					<view class="flex1">
+						<image :src="item.picPath" mode="aspectFit" class="item-cover"></image>
+					</view>
+					<view class="flex1">
+						<view class="col-box">
+							<text class="flex1">{{item.name}}</text>
+							<text class="flex1">{{item.count}}</text>
+						</view>
+					</view>
+					<view class="flex1">
+						<image src="/static/img/me/right.png" mode="aspectFit" class="image-right"></image>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -37,6 +50,27 @@
 					{ name: '主题', backgroundColor: '#000', activeColor: '#fff'}, 
 				],
 				list:[],
+				topicList:[{
+					"id": 17,
+					"pic_id": null,
+					"code": "yidi",
+					"name": "异地恋",
+					"mark": "只有经历过异地恋的人才知道，原来思念也可以深入骨髓。当见面的那一刻，如洪水决堤，囤积已久的思念终于得到了释放。",
+					"praiseNum": 68439,
+					"collectNum": 3423,
+					"count": 10,
+					"isDel": 0,
+					"createBy": 1,
+					"createTime": "2019-09-21 23:48:52",
+					"picPath": "https://www.lrshuai.top/miniadmin/show/20190921/F13C549F43A449D787ACA1A10672EFA7.jpg",
+					"userPath": "http://www.lrshuai.top/upload/user/20170612/05976238.png",
+					"praiseFlag": false,
+					"collectFlag": false,
+					"nickName": "帅大叔",
+					"picUrl": "https://www.lrshuai.top/upload/user/20170612/05976238.png",
+					"top": 920.1553955078125,
+					"left": 1
+				}],
 				isNull:true,
 				pageNo:1111,
 				pageSize:10,
@@ -124,5 +158,20 @@
 	  top: 15%;
 	  width: 100%;
 	  text-align: center;
+	}
+	.topic-item{
+		height: 200upx;
+		position: relative;
+	}
+	.item-cover{
+		width: 100%;
+		height: 100%;
+		background: #1A1A1A;
+	}
+	.image-right{
+		width: 30upx;
+		height: 30upx;
+		position: absolute;
+		right: 5%;
 	}
 </style>
