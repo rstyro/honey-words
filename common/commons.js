@@ -9,6 +9,9 @@ const puaTopicListUrl="/pua/speechcraftType/list";
 const puaTopicDetailUrl="/pua/speechcraftType/detail";
 //某个主题中的数据列表
 const sftListByTopicUrl="/pua/speechcraft/getSpeechcraftListByTopic";
+
+//收藏列表
+const collectListUrl="/pua/collect/list";
 //点赞
 const praiseUrl="/pua/praise/praiseMe";
 //收藏
@@ -161,6 +164,7 @@ export default {
 	puaTopicListUrl,
 	puaTopicDetailUrl,
 	sftListByTopicUrl,
+	collectListUrl,
 	praiseUrl,
 	collectUrl,
 	topicType,
