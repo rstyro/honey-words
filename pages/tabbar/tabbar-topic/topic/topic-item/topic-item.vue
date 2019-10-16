@@ -189,7 +189,7 @@
 		filters:{ // 通过局部过滤器来实现
 			msgDateFormat:function(msg,pattern=''){
 				// 将字符串转换为Date类型
-				var mt = new Date(msg)
+				var mt = new Date(msg.replace(/-/g, '/'))
 				// 获取年份
 				var y = mt.getFullYear()
 				// 获取月份 从0开始 

@@ -3,7 +3,7 @@
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
-		this.setInit();
+		 this.setInit();
 		
 	},
 	onShow: function() {
@@ -16,7 +16,7 @@ export default {
 	methods:{
 		setInit(){
 			console.log("初始化信息");
-			uni.setStorageSync("token","a5e4443a85d7443da751fd7e6558d55b");
+			uni.setStorageSync("token","8b330a6651ca47a6a6b7ee5cc532fb7a");
 			var userInfo={
 					"userId": 1,
 					"nickName": "帅大叔",
@@ -51,6 +51,7 @@ export default {
 								index: 2,
 								text: ''+amount
 							});
+							uni.setStorageSync('msgNumber', amount);
 						}
 					}
 				}

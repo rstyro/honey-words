@@ -66,7 +66,7 @@
 						key: 2,
 						name: '系统消息',
 						icon: '/static/img/me/message.png',
-						redDot:true,
+						redDot:false,
 						isShow: true
 					},
 					{
@@ -108,6 +108,11 @@
 		 },
 		methods: {
 			init(){
+				const msgNumber = uni.getStorageSync("msgNumber");
+				console.log("!!msgNumber:",msgNumber);
+				if(msgNumber){
+					this.menus[1].redDot=true;
+				}
 				const userInfo = uni.getStorageSync("userInfo");
 				if(userInfo){
 					this.userInfo=userInfo;
@@ -202,6 +207,11 @@
 				});
 			},
 			systemMessage(){
+				this.menus[1].redDot=false;
+				uni.removeStorageSync("msgNumber");
+				uni.removeTabBarBadge({
+					index: 2
+				});
 				uni.navigateTo({
 				    url: '/pages/tabbar/tabbar-me/menus/system-message/system-message',
 				    animationType: 'zoom-out',

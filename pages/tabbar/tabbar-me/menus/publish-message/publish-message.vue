@@ -64,7 +64,7 @@
 				// 请求自己的服务器
 				uni.request({
 				   url: commons.baseUrl+'/sys/sysmsg/pulishMsg',
-				   method:"GET",
+				   method:"POST",
 				   header: {
 					   "content-type": "application/x-www-form-urlencoded",
 					   "Authority":that.authority,

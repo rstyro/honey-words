@@ -17,6 +17,8 @@ const praiseUrl="/pua/praise/praiseMe";
 //收藏
 const collectUrl="/pua/collect/collectMe";
 
+const aboutUrl="/mini/about/list";
+
 const topicType="topic";
 const sftType="speechcraft";
 
@@ -167,6 +169,7 @@ export default {
 	collectListUrl,
 	praiseUrl,
 	collectUrl,
+	aboutUrl,
 	topicType,
 	sftType,
     showTokenError,  

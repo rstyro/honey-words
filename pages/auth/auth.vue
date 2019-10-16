@@ -134,6 +134,7 @@
 						index: 2,
 						text: ''+amount
 					});
+					uni.setStorageSync('msgNumber', amount);
 				}
 			},
 			showError: function(){

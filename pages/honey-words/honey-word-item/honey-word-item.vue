@@ -15,21 +15,29 @@
 				<image v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/collect.png"></image>
 				<image v-else class="honey-item-icon" src="/static/img/collect-active.png"></image>
 			</view>
-			<view class="col-box">
-				<view class="honey-item-collect-animate1">
-					<vue-star class="honey-item-collect-animate" v-if="!honeyItem.collectFlag" animate="animated bounceIn" color="rgb(152, 138, 222)">
-					    <img slot="icon" class="honey-item-icon" src="/static/img/collect.png" />
-					</vue-star>
-					<vue-star class="honey-item-collect-animate" v-else animate="animated bounceIn" color="rgb(152, 138, 222)">
-					    <img slot="icon" class="honey-item-icon" src="/static/img/collect-active.png" />
-					</vue-star>
-				</view>
-				
-				
-				
-			</view>
-			
 		</view>
+		<!-- <view class="row-box">
+			<view class="col-box">
+				<view class="animate-box">
+					<view >
+						<vue-star v-if="!honeyItem.praiseFlag" class="honey-item-animate1" animate="animated bounceIn" color="rgb(152, 138, 222)">
+							<img @click="praiseHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/praise.png" />
+						</vue-star>
+						<vue-star v-else class="honey-item-animate1" animate="animated bounceIn" color="rgb(152, 138, 222)">
+							<img @click="praiseHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/praise-active.png" />
+						</vue-star>
+					</view>
+					<view >
+						<vue-star v-if="!honeyItem.collectFlag" class="honey-item-animate2" animate="animated bounceIn" color="rgb(152, 138, 222)">
+							<img @click="collectHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/collect.png" />
+						</vue-star>
+						<vue-star v-else class="honey-item-animate2" animate="animated bounceIn" color="rgb(152, 138, 222)">
+							<img @click="collectHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/collect-active.png" />
+						</vue-star>
+					</view>
+				</view>
+			</view>
+		</view> -->
 	</view>
 </template>
 
@@ -68,6 +76,7 @@
 		padding: 0rpx 10px 10rpx 10px;
 		background: #fff;
 		border-radius: 5rpx;
+		position: relative;
 	}
 	.honey-item-top{
 		font-size: 24rpx;
@@ -96,7 +105,7 @@
 		height: 32rpx;
 		vertical-align: middle;
 	}
-	.honey-item-praise{
+	.honey-item-praise {
 		display: inline-block;
 		font-size: 0;
 		background-color: #37C6C0;
@@ -120,8 +129,18 @@
 		  border-radius: 4rpx;
 		  margin-left: 30rpx;
 	}
-	.honey-item-collect-animate1{
-		background: #007AFF;
+	.animate-box{
+		/* background: #007AFF; */
+	}
+	.honey-item-animate1{
+		position: absolute;
+		left: -7%;
+		top: 41%;
+	}
+	.honey-item-animate2{
+		position: absolute;
+		left: 13%;
+		top: 41%;
 	}
 	
 </style>

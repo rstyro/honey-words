@@ -57,7 +57,8 @@
 
 <style lang="less">
 .VueStar{
-  position: absolute;
+  // position: absolute;
+
 }
 .VueStar__ground {
     width: 100px;

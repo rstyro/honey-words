@@ -17,18 +17,19 @@
 </template>
 
 <script>
+	import commons from '@/common/commons.js';
 	export default {
 		data() {
 			return {
-			userInfo: {
-				  userPath: "https://avatars2.githubusercontent.com/u/16098932?s=460&v=4",
-				  nickName: "帅大叔",
-			},
-			aboutInfo: [
-				{ text: "编写这个小程序呢，先是感兴趣，其次就是为了学习！" },
-				{ text: "好听的情话，说多了也不会腻，你还对你的爱人吝啬你的赞美吗？" },
-			  ],
-			  aboutMe: [{ text:"性别男，身高173，体重60kg，一个码农界的打杂大叔"}]
+				userInfo: {
+					  userPath: "https://avatars2.githubusercontent.com/u/16098932?s=460&v=4",
+					  nickName: "帅大叔",
+				},
+				aboutInfo: [
+					{ text: "编写这个小程序呢，先是感兴趣，其次就是为了学习！" },
+					{ text: "好听的情话，说多了也不会腻，你还对你的爱人吝啬你的赞美吗？" },
+				  ],
+			  aboutMe: [{ text:"90后，最靓的Boy"}]
 			}
 		},
 		onLoad() {
@@ -36,10 +37,27 @@
 			if(userInfo){
 				this.userInfo=userInfo;
 			}
-			console.log("userInfo:",userInfo);
+			this.getList();
 		},
 		methods: {
-			
+			getList(){
+				var that = this;
+				uni.request({
+				    url: commons.baseUrl+commons.aboutUrl,
+				    data: {}
+				}).then(data=>{
+					var [error, res] =data;
+					if(error){
+						console.log(error);
+					}
+					if(typeof(res) != "undefined" && res.statusCode == 200 && res.data.status == 200){
+						this.aboutMe = res.data.me;
+						this.aboutInfo = res.data.program;
+							
+					}
+				});
+				
+			},
 		}
 	}
 </script>
