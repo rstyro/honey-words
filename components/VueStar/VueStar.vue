@@ -2,7 +2,7 @@
 	<view>
 		<view class="VueStar">
 		  <view class="VueStar__ground">
-		    <view class="VueStar__icon" @click="toggle" :class="AnimateClass" :style='{color:ColorValue}'>
+		    <view class="VueStar__icon" @click="toggle" :class="AnimateClass" :active="active" >
 		      <slot name="icon"></slot>
 		    </view>
 		    <view class="VueStar__decoration" :class="{ 'VueStar__decoration--active':active}"></view>
@@ -12,44 +12,25 @@
 </template>
 
 <script>
-	import { isColors } from '../../common/colorRE.js'
 	export default {
 	  name: 'VueStar',
 	  props: {
 	    animate: String,
-	    color: String
+		active:Boolean
 	  },
 	  methods: {
 	    toggle () {
 	      this.active = !this.active
-	      this.toggleAnimate = !this.toggleAnimate
-	      this.toggleColor = !this.toggleColor
 	    }
 	  },
 	  data () {
 	    return {
-	      active: false,
-	      toggleAnimate: false,
-	      toggleColor: false
+	      toggleAnimate: false
 	    }
 	  },
 	  computed: {
 	    AnimateClass () {
-	      return this.toggleAnimate ? this.animate : ''
-	    },
-	    ColorValue () {
-	      return this.toggleColor ? this.color : ''
-	    }
-	  },
-	  mounted () {
-	    if (this.color) {
-	      if (isColors(this.color)) {
-	        return
-	      } else {
-	        console.error('this color must be hexcolor or rgbcolor  ---VueStar')
-	      }
-	    } else {
-	      return
+	      return this.active ? this.animate : ''
 	    }
 	  }
 	}

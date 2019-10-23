@@ -21,14 +21,14 @@
 			<view class="praise-background">
 				<view class="praise-num">{{honeyItem.praiseNum}}</view>
 			</view>
-			<vue-star class="icon-praise" animate="animated bounceIn" color="rgb(152, 138, 222)">
+			<vue-star class="icon-praise" :active="honeyItem.praiseFlag" animate="animated bounceIn" >
 				<image slot="icon" @click="praiseHoneyWords" v-if="!honeyItem.praiseFlag" class="honey-item-icon" src="/static/img/praise.png"></image>
 				<image slot="icon" @click="praiseHoneyWords" v-else class="honey-item-icon" src="/static/img/praise-active.png"></image>
 			</vue-star>
 			
 			<view class="collect-background">
 			</view>
-			<vue-star  class="icon-collect" animate="animated bounceIn" color="rgb(152, 138, 222)">
+			<vue-star  class="icon-collect" :active="honeyItem.collectFlag" animate="animated wobble" >
 				<image slot="icon" @click="collectHoneyWords" v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/collect.png"></image>
 				<image slot="icon" @click="collectHoneyWords" v-else class="honey-item-icon" src="/static/img/collect-active.png"></image>
 			</vue-star>
@@ -38,7 +38,8 @@
 </template>
 
 <script>
-	import VueStar from '@/components/VueStar/VueStar.vue';
+	// import VueStar from '@/components/VueStar/VueStar.vue';
+	import VueStar from '@/components/star-animated/star-animated.vue';
 	
 	export default {
 		props:{
@@ -131,11 +132,12 @@
 	
 	.bottom-box{
 		height: 50px;
+		overflow: hidden;
 	}
 	.praise-background{
 		width: 60px;
 		height: 25px;
-		background: #37C6C0;
+		background: #9DD3FA;
 		position: absolute;
 		left: 10px;
 		bottom: 10px;
@@ -149,20 +151,22 @@
 		position: absolute;
 		bottom: -25px;
 		left: -20px;
+		overflow: hidden;
 	}
 	
 	.collect-background{
 		width: 25px;
 		height: 25px;
-		background: #37C6C0;
+		background: #9DD3FA;
 		position: absolute;
-		right: 16px;
+		right: 17px;
 		bottom: 10px;
 	}
 	.icon-collect{
 		position: absolute;
 		bottom: -25px;
 		right: -20px;
+		overflow: hidden;
 	}
 	
 </style>

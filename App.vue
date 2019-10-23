@@ -3,7 +3,7 @@
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
-		 this.setInit();
+		// this.setInit();
 		
 	},
 	onShow: function() {
@@ -63,7 +63,7 @@ export default {
 
 <style>
 /*每个页面公共css */ 
-
+@import '/static/style/animate.min.css';
 /*flex*/
 .col-box{
 display:flex;display:-webkit-flex;
