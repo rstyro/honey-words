@@ -28,7 +28,7 @@
 			
 			<view class="collect-background">
 			</view>
-			<vue-star  class="icon-collect" :active="honeyItem.collectFlag" animate="animated wobble" >
+			<vue-star  class="icon-collect" :active="honeyItem.collectFlag" animate="animated bounce" >
 				<image slot="icon" @click="collectHoneyWords" v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/collect.png"></image>
 				<image slot="icon" @click="collectHoneyWords" v-else class="honey-item-icon" src="/static/img/collect-active.png"></image>
 			</vue-star>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-	// import VueStar from '@/components/VueStar/VueStar.vue';
 	import VueStar from '@/components/star-animated/star-animated.vue';
 	
 	export default {
@@ -74,6 +73,7 @@
 		background: #fff;
 		border-radius: 5rpx;
 		position: relative;
+		overflow: hidden;
 		min-height: 70px;
 	}
 	.honey-item-top{
@@ -132,7 +132,8 @@
 	
 	.bottom-box{
 		height: 50px;
-		overflow: hidden;
+		width: 100%;
+		
 	}
 	.praise-background{
 		width: 60px;
@@ -151,22 +152,21 @@
 		position: absolute;
 		bottom: -25px;
 		left: -20px;
-		overflow: hidden;
+		
 	}
 	
 	.collect-background{
-		width: 25px;
+		width: 35px;
 		height: 25px;
 		background: #9DD3FA;
 		position: absolute;
-		right: 17px;
+		right: 13px;
 		bottom: 10px;
 	}
 	.icon-collect{
 		position: absolute;
 		bottom: -25px;
 		right: -20px;
-		overflow: hidden;
 	}
 	
 </style>

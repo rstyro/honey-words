@@ -2,7 +2,7 @@
 	<view>
 		<view class="icon-box">
 			<view class="icon-background">
-				<view class="icon-location" @click="toggle" :class="AnimateClass">
+				<view class="icon-location animated" @click="toggle" :class="AnimateClass">
 					<slot name="icon" ></slot>
 				</view>
 				<view class="icon-decoration" :class="{ 'icon-decoration-active':toggleAnimate}"></view>
@@ -23,16 +23,34 @@
 	    toggle () {
 			console.log("ACTIVE=",this.active);
 			this.toggleAnimate = !this.active;
-	    }
+	    },
+		randomFrom(lowerValue,upperValue){
+		 return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
+		},
+		getRandomNum(){
+			const len = this.randomAnimatedList.length;
+			const randomNum = this.randomFrom(0,len);
+			return randomNum;
+		}
 	  },
 	  data () {
 	    return {
+			randomAnimatedList:[
+					"bounce",
+					"rubberBand",
+					"fadeInDown",
+					"rotateIn",
+					"rollIn",
+					"zoomIn",
+					"slideInLeft",
+				],
 	      toggleAnimate: false
 	    }
 	  },
 	  computed: {
 	    AnimateClass () {
-	      return this.toggleAnimate ? this.animate : ''
+	      // return this.toggleAnimate ? this.animate : '';
+		  return this.toggleAnimate ? this.randomAnimatedList[this.getRandomNum()] : ''
 	    }
 	  }
 	}

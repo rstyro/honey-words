@@ -1,6 +1,6 @@
 <template>
-	<view>
-		设置页
+	<view class="content">
+		暂不可设置
 	</view>
 </template>
 
@@ -18,5 +18,8 @@
 </script>
 
 <style>
-
+	.content{
+		text-align: center;
+		padding: 80rpx;
+	}
 </style>

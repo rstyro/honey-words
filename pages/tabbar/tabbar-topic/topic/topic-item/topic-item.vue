@@ -19,13 +19,13 @@
 			</view>
 			<view class="row-box">
 				<view class="flex1">
-					<view class="pic-box praise-pic" @click="praiseTopic">
+					<view class="pic-box praise-pic animated" :class="praiseAnimateClass" @click="praiseTopic">
 						<image v-if="!item.praiseFlag" class="pic praise-pic" src="/static/img/praise.png"></image>
 						<image v-else class="pic" src="/static/img/praise-active.png"></image>
 					</view>
 				</view>
 				<view class="flex1">
-					<view class="pic-box collect-pic" @click="collectTopic">
+					<view class="pic-box collect-pic animated" :class="colectAnimateClass" @click="collectTopic">
 						<image v-if="!item.collectFlag" class="pic collect-pic" src="/static/img/collect.png"></image>
 						<image v-else class="pic" src="/static/img/collect-active.png"></image>
 					</view>
@@ -42,6 +42,7 @@
 
 <script>
 	import commons from '@/common/commons.js'; 
+	import VueStar from '@/components/star-animated/star-animated.vue';
 	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
 	export default {
 		data() {
@@ -73,7 +74,9 @@
 				isNull:true,
 				pageNo:1,
 				pageSize:10,
-				pages:0
+				pages:0,
+				praiseToggleAnimate: false,
+				colectToggleAnimate: false
 			}
 		},
 		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
@@ -95,7 +98,16 @@
 			this.getList();
 		},
 		components: {
-			honeyList
+			honeyList,
+			VueStar
+		},
+		computed: {
+			colectAnimateClass () {
+				return this.colectToggleAnimate ? 'rotateIn': ''
+			},
+			praiseAnimateClass () {
+				return this.praiseToggleAnimate ? 'zoomIn': ''
+			}
 		},
 		methods: {
 			setToken(){
@@ -122,6 +134,7 @@
 					if(typeof(res) != "undefined" && res.statusCode == 200 &&res.data.status == 200){
 						that.item = res.data.data;
 						that.item.picPath =commons.preUrl+that.item.picPath;
+						
 					}
 				});
 			},
@@ -179,9 +192,11 @@
 				commons.collect(commons.baseUrl+commons.collectUrl,this.authority,id,commons.sftType,this.list);
 			},
 			praiseTopic(){
+				this.praiseToggleAnimate = !this.item.praiseFlag;
 				commons.praise(commons.baseUrl+commons.praiseUrl,this.authority,this.id,commons.topicType,this.item);
 			},
 			collectTopic(){
+				this.colectToggleAnimate = !this.item.collectFlag;
 				commons.collect(commons.baseUrl+commons.collectUrl,this.authority,this.id,commons.topicType,this.item);
 			},
 			
@@ -288,5 +303,4 @@
   width: 100%;
   text-align: center;
 }
-
 </style>
