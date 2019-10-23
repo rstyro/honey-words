@@ -99,8 +99,8 @@
 		margin-top: 30rpx;
 	}
 	.honey-item-icon{
-		width: 32rpx;
-		height: 32rpx;
+		width: 42rpx;
+		height: 42rpx;
 		vertical-align: middle;
 	}
 	.honey-item-praise {
