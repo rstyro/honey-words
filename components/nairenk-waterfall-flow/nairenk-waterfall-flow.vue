@@ -10,7 +10,7 @@
 				<image class="image" mode="aspectFill" :src="item.picPath" style="width: 100%; display: block;" ></image>
 			</view>
 			<view class="content">
-				<text>{{item.mark}}</text>
+				<text>{{item.name}}</text>
 				<view class="user">
 					<image style="width: 40upx; height: 40upx; border-radius: 50%; margin-right: 10upx;" 
 						:src="item.picUrl"></image>

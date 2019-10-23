@@ -5,7 +5,7 @@
 			<view class="flex1 honey-item-name" >{{honeyItem.createUsername}}</view>
 		</view>
 		<text class='row-box honey-item-content'  selectable='true'>{{honeyItem.content}}</text>
-		<view class="row-box honey-item-bottom">
+<!-- 		<view class="row-box honey-item-bottom">
 			<view class="col-box honey-item-praise" @click="praiseHoneyWords">
 				<image v-if="!honeyItem.praiseFlag" class="honey-item-icon" src="/static/img/praise.png"></image>
 				<image v-else class="honey-item-icon" src="/static/img/praise-active.png"></image>
@@ -15,29 +15,25 @@
 				<image v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/collect.png"></image>
 				<image v-else class="honey-item-icon" src="/static/img/collect-active.png"></image>
 			</view>
-		</view>
-		<!-- <view class="row-box">
-			<view class="col-box">
-				<view class="animate-box">
-					<view >
-						<vue-star v-if="!honeyItem.praiseFlag" class="honey-item-animate1" animate="animated bounceIn" color="rgb(152, 138, 222)">
-							<img @click="praiseHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/praise.png" />
-						</vue-star>
-						<vue-star v-else class="honey-item-animate1" animate="animated bounceIn" color="rgb(152, 138, 222)">
-							<img @click="praiseHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/praise-active.png" />
-						</vue-star>
-					</view>
-					<view >
-						<vue-star v-if="!honeyItem.collectFlag" class="honey-item-animate2" animate="animated bounceIn" color="rgb(152, 138, 222)">
-							<img @click="collectHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/collect.png" />
-						</vue-star>
-						<vue-star v-else class="honey-item-animate2" animate="animated bounceIn" color="rgb(152, 138, 222)">
-							<img @click="collectHoneyWords" slot="icon" class="honey-item-icon" src="/static/img/collect-active.png" />
-						</vue-star>
-					</view>
-				</view>
-			</view>
 		</view> -->
+		
+		<view class="bottom-box">
+			<view class="praise-background">
+				<view class="praise-num">{{honeyItem.praiseNum}}</view>
+			</view>
+			<vue-star class="icon-praise" animate="animated bounceIn" color="rgb(152, 138, 222)">
+				<image slot="icon" @click="praiseHoneyWords" v-if="!honeyItem.praiseFlag" class="honey-item-icon" src="/static/img/praise.png"></image>
+				<image slot="icon" @click="praiseHoneyWords" v-else class="honey-item-icon" src="/static/img/praise-active.png"></image>
+			</vue-star>
+			
+			<view class="collect-background">
+			</view>
+			<vue-star  class="icon-collect" animate="animated bounceIn" color="rgb(152, 138, 222)">
+				<image slot="icon" @click="collectHoneyWords" v-if="!honeyItem.collectFlag" class="honey-item-icon" src="/static/img/collect.png"></image>
+				<image slot="icon" @click="collectHoneyWords" v-else class="honey-item-icon" src="/static/img/collect-active.png"></image>
+			</vue-star>
+	
+		</view>
 	</view>
 </template>
 
@@ -77,6 +73,7 @@
 		background: #fff;
 		border-radius: 5rpx;
 		position: relative;
+		min-height: 70px;
 	}
 	.honey-item-top{
 		font-size: 24rpx;
@@ -129,18 +126,43 @@
 		  border-radius: 4rpx;
 		  margin-left: 30rpx;
 	}
-	.animate-box{
-		/* background: #007AFF; */
+	
+	/** 新版**/
+	
+	.bottom-box{
+		height: 50px;
 	}
-	.honey-item-animate1{
+	.praise-background{
+		width: 60px;
+		height: 25px;
+		background: #37C6C0;
 		position: absolute;
-		left: -7%;
-		top: 41%;
+		left: 10px;
+		bottom: 10px;
 	}
-	.honey-item-animate2{
+	.praise-num{
+		text-align: right;
+		margin-right: 20rpx;
+		color: #fff;
+	}
+	.icon-praise{
 		position: absolute;
-		left: 13%;
-		top: 41%;
+		bottom: -25px;
+		left: -20px;
+	}
+	
+	.collect-background{
+		width: 25px;
+		height: 25px;
+		background: #37C6C0;
+		position: absolute;
+		right: 16px;
+		bottom: 10px;
+	}
+	.icon-collect{
+		position: absolute;
+		bottom: -25px;
+		right: -20px;
 	}
 	
 </style>
