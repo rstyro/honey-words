@@ -14,7 +14,7 @@
 		<view v-else>
 			<text v-if="topicIsNull"  class="null-data">暂无数据</text>
 			<view v-else class="topic-box">
-				<view v-for="(item,index) in topicList" class="topic-item row-box" @click="toTopicDetail(item.id)">
+				<view v-for="(item,index) in topicList" :key="index" class="topic-item row-box" @click="toTopicDetail(item.id)">
 					<view class="flex1">
 						<image :src="item.picPath" mode="aspectFill" class="topic-cover"></image>
 					</view>
@@ -35,7 +35,7 @@
 
 <script>
 	import commons from '@/common/commons.js';
-	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
+	import honeyList from '@/components/honey-words/honey-word-list/honey-word-list.vue';
 	import QSTabs from '@/components/QS-tabs/QS-tabs.vue';
 	export default {
 		components: {

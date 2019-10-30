@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="topic-item-body">
 		<image class="topic-pic" :src="item.picPath" mode="aspectFill"></image>
 		<view class="topic-box">
 			<view class="row-box">
@@ -43,33 +43,13 @@
 <script>
 	import commons from '@/common/commons.js'; 
 	import VueStar from '@/components/star-animated/star-animated.vue';
-	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
+	import honeyList from '@/components/honey-words/honey-word-list/honey-word-list.vue';
 	export default {
 		data() {
 			return {
 				id:"",
 				authority:'',
-				item:{
-					"id": 17,
-					"pic_id": null,
-					"code": "yidi",
-					"name": "异地恋",
-					"mark": "只有经历过异地恋的人才知道，原来思念也可以深入骨髓。当见面的那一刻，如洪水决堤，囤积已久的思念终于得到了释放。",
-					"praiseNum": 68439,
-					"collectNum": 3423,
-					"count": 0,
-					"isDel": 0,
-					"createBy": 1,
-					"createTime": "2019-09-21 23:48:52",
-					"picPath": "https://www.lrshuai.top/miniadmin/show/20190921/F13C549F43A449D787ACA1A10672EFA7.jpg",
-					"userPath": "http://www.lrshuai.top/upload/user/20170612/05976238.png",
-					"praiseFlag": false,
-					"collectFlag": false,
-					"nickName": "帅大叔",
-					"picUrl": "https://www.lrshuai.top/upload/user/20170612/05976238.png",
-					"top": 920.1553955078125,
-					"left": 1
-				},
+				item:{},
 				list:[],
 				isNull:true,
 				pageNo:1,
@@ -180,9 +160,12 @@
 					}else{
 						commons.requestError();
 					}
-					uni.hideNavigationBarLoading();
+					
 				});
+				uni.hideNavigationBarLoading();
+				console.log("准备停止刷新");
 				uni.stopPullDownRefresh();
+				console.log("结束停止刷新");
 			},
 			praiseHoney(id){
 				commons.praise(commons.baseUrl+commons.praiseUrl,this.authority,id,commons.sftType,this.list);
@@ -202,33 +185,37 @@
 		},
 		filters:{ // 通过局部过滤器来实现
 			msgDateFormat:function(msg,pattern=''){
-				// 将字符串转换为Date类型
-				var mt = new Date(msg.replace(/-/g, '/'))
-				// 获取年份
-				var y = mt.getFullYear()
-				// 获取月份 从0开始 
-				var m = (mt.getMonth()+1).toString().padStart(2,"0")
-				// 获取天数
-				var d = mt.getDate();
-				if(pattern === 'yyyy-mm-dd'){
-					return y+"-"+m+"-"+d
+				if(typeof(msg) != "undefined" &&  msg != ""){
+					// 将字符串转换为Date类型
+					var mt = new Date(msg.replace(/-/g, '/'))
+					// 获取年份
+					var y = mt.getFullYear()
+					// 获取月份 从0开始 
+					var m = (mt.getMonth()+1).toString().padStart(2,"0")
+					// 获取天数
+					var d = mt.getDate();
+					if(pattern === 'yyyy-mm-dd'){
+						return y+"-"+m+"-"+d
+					}
+					// 获取小时
+					var h = mt.getHours().toString().padStart(2,"0")
+					// 获取分钟
+					var mi = mt.getMinutes().toString().padStart(2,"0")
+					// 获取秒
+					var s = mt.getSeconds().toString().padStart(2,"0")
+					// 拼接为我们需要的各式
+					return y+"-"+m+"-"+d+" "+h+":"+mi+":"+s;
+				}else{
+					return "";
 				}
-				// 获取小时
-				var h = mt.getHours().toString().padStart(2,"0")
-				// 获取分钟
-				var mi = mt.getMinutes().toString().padStart(2,"0")
-				// 获取秒
-				var s = mt.getSeconds().toString().padStart(2,"0")
-				// 拼接为我们需要的各式
-				return y+"-"+m+"-"+d+" "+h+":"+mi+":"+s
+				
 			}
 		}
 	}
 </script>
 
 <style>
-.content{
-	/* background: #efeff1; */
+.topic-item-body{
 	width: 100%;
 	height: 100%;
 	margin: 0px;
@@ -265,9 +252,6 @@
 }
 .topic-box .time{
 	float: right;
-}
-.topic-box .praise-num{
-	vertical-align: middle;
 }
 
 .topic-box .pic-box{

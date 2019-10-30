@@ -12,7 +12,7 @@
 <script>
 	import commons from '@/common/commons.js';  
 	import mSearch from '@/components/mehaotian-search/mehaotian-search.vue';
-	import honeyList from '@/pages/honey-words/honey-word-list/honey-word-list.vue';
+	import honeyList from '@/components/honey-words/honey-word-list/honey-word-list.vue';
 	
 	export default {
 		components: {
