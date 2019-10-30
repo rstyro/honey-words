@@ -181,9 +181,8 @@
 						commons.requestError();
 					}
 					uni.hideNavigationBarLoading();
-					uni.stopPullDownRefresh();
 				});
-				
+				uni.stopPullDownRefresh();
 			},
 			praiseHoney(id){
 				commons.praise(commons.baseUrl+commons.praiseUrl,this.authority,id,commons.sftType,this.list);

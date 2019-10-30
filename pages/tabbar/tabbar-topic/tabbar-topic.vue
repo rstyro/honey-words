@@ -88,6 +88,7 @@
 					 		this.list = this.list.concat(resultList);
 					 	}
 					 }
+					 this.loading=false;
 					 uni.stopPullDownRefresh();
 				});
 				
