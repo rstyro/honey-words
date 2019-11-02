@@ -120,25 +120,10 @@
 						this.menus[0].isShow=true;
 					}
 				}else{
-					this.showTokenError();
+					commons.showTokenError();
 				}
 				uni.stopPullDownRefresh();
 				console.log("userInfo:",userInfo);
-			},
-			showTokenError(){
-				uni.showModal({
-					title: '提示',
-					content: 'token失效，请重新授权登录',
-					showCancel: false,
-					success: function (res) {
-						if (res.confirm) {
-							console.log('用户点击确定');
-							uni.reLaunch({
-								url: '/pages/auth/auth'
-							});
-						}
-					}
-				});
 			},
 			topClick(key){
 				switch(key){
@@ -173,6 +158,10 @@
 				}
 			},
 			settingPage(){
+				if(!this.userInfo.userId){
+					commons.showTokenError();
+					return;
+				}
 				uni.navigateTo({
 				    url: '/pages/tabbar/tabbar-me/menus/setting/setting',
 				    animationType: 'pop-in',
@@ -180,6 +169,10 @@
 				});
 			},
 			collectPage(){
+				if(!this.userInfo.userId){
+					commons.showTokenError();
+					return;
+				}
 				uni.navigateTo({
 				    url: '/pages/tabbar/tabbar-me/menus/collect/collect',
 				    animationType: 'pop-in',
@@ -207,6 +200,10 @@
 				});
 			},
 			systemMessage(){
+				if(!this.userInfo.userId){
+					commons.showTokenError();
+					return;
+				}
 				this.menus[1].redDot=false;
 				uni.removeStorageSync("msgNumber");
 				uni.removeTabBarBadge({
@@ -227,6 +224,10 @@
 				});
 			},
 			feedback(){
+				if(!this.userInfo.userId){
+					commons.showTokenError();
+					return;
+				}
 				uni.navigateTo({
 				    url: '/pages/tabbar/tabbar-me/menus/feedback/feedback',
 				    animationType: 'zoom-out',

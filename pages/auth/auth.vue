@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<button type="primary" class="" open-type="getUserInfo" @getuserinfo="wxGetUserInfo" withCredentials="true">授权获取用户信息</button>
+		<button type="primary" class="" open-type="getUserInfo" @getuserinfo="wxGetUserInfo" withCredentials="true">授权登陆</button>
 
 	</view>
 </template>
@@ -152,7 +152,7 @@
 		margin: 40% auto;
 		
 		button{
-			width: 60%;
+			width: 50%;
 		}
 	}
 </style>

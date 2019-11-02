@@ -49,7 +49,10 @@
 			return {
 				id:"",
 				authority:'',
-				item:{},
+				item:{
+					praiseNum:0,
+					collectNum:0
+				},
 				list:[],
 				isNull:true,
 				pageNo:1,
@@ -63,7 +66,13 @@
 			console.log(option); //打印出上个页面传递的参数。
 			if(option.hasOwnProperty("topicId")){
 				this.id=option.topicId;
-				this.setToken();
+				const cacheToken = uni.getStorageSync("token");
+				if(cacheToken){
+					this.authority=cacheToken;
+				}else{
+					commons.showTokenError();
+					return;
+				}
 				this.getDetail();
 				this.getList();
 			}
@@ -90,13 +99,6 @@
 			}
 		},
 		methods: {
-			setToken(){
-				const cacheToken = uni.getStorageSync("token");
-				console.log("cacheToken:",cacheToken);
-				if(cacheToken){
-					this.authority=cacheToken;
-				}
-			},
 			getDetail(){
 				var that = this;
 				uni.request({
@@ -115,6 +117,9 @@
 						that.item = res.data.data;
 						that.item.picPath =commons.preUrl+that.item.picPath;
 						
+					}else if(res.data.status == "70000"){
+						uni.removeStorageSync("token");
+						commons.showTokenError();
 					}
 				});
 			},

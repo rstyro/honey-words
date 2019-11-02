@@ -1,5 +1,5 @@
-// const baseUrl = 'http://localhost:8689';  
-const baseUrl = 'https://www.lrshuai.top/miniapi';  
+const baseUrl = 'http://localhost:8689';  
+// const baseUrl = 'https://www.lrshuai.top/miniapi';  
 const preUrl="https://www.lrshuai.top/miniadmin/show";
 
 //首页列表				
@@ -25,8 +25,8 @@ const sftType="speechcraft";
 const showTokenError = function(){
 	uni.showModal({
 		title: '提示',
-		content: 'token失效，请重新授权登录',
-		showCancel: false,
+		content: '此操作需要登录',
+		showCancel: true,
 		success: function (res) {
 			if (res.confirm) {
 				console.log('用户点击确定');
@@ -52,10 +52,9 @@ const showNoMore = function(){
 
 // 点赞
 const praise = function(url,authority,tableId,tableType,list){
-	console.log("praise-authority:",authority);
-	console.log("praise-tableId:",tableId);
-	console.log("praise-tableType:",tableType);
-	console.log("praise-list:",list);
+	if(authority == ""){
+		showTokenError();
+	}
 	uni.request({
 			url: url,
 			method:"POST",
@@ -89,6 +88,9 @@ const praise = function(url,authority,tableId,tableType,list){
 					}
 				}
 				console.log("点赞成功")
+			}else if(res.data.status == "70000"){
+				uni.removeStorageSync("token");
+				showTokenError();
 			}else{
 				uni.showToast({
 					title: res.data.message,
@@ -103,6 +105,9 @@ const praise = function(url,authority,tableId,tableType,list){
 
 //收藏
 const collect = function(url,authority,tableId,tableType,list){
+	if(authority == ""){
+		showTokenError();
+	}
 	uni.request({
 			url: url,
 			method:"POST",
@@ -130,6 +135,9 @@ const collect = function(url,authority,tableId,tableType,list){
 					}
 				}
 				console.log("收藏成功,tableId={}",tableId)
+			}else if(res.data.status == "70000"){
+				uni.removeStorageSync("token");
+				showTokenError();
 			}else{
 				uni.showToast({
 					title: res.data.message,
