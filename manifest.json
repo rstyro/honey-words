@@ -55,6 +55,9 @@
             "minified" : true
         },
         "usingComponents" : true,
-        "permission" : {}
+        "permission" : {},
+		"navigateToMiniProgramAppIdList":[
+			"wx18a2ac992306a5a4"
+		]
     }
 }

@@ -186,11 +186,25 @@
 				});
 			},
 			rewardMoney(){
-				uni.navigateTo({
-				    url: '/pages/tabbar/tabbar-me/menus/reward/reward',
-				    animationType: 'pop-in',
-				    animationDuration: 1000
-				});
+				// uni.navigateTo({
+				//     url: '/pages/tabbar/tabbar-me/menus/reward/reward',
+				//     animationType: 'pop-in',
+				//     animationDuration: 1000
+				// });
+				
+				//跳转 给赞
+				wx.navigateToMiniProgram({
+				  appId: 'wx18a2ac992306a5a4',
+				  path: 'pages/apps/largess/detail?id=CZVcGJq6ko0%3D',
+				  envVersion: 'release',// release、develop	
+				  success(res) {
+				    // 打开成功
+					console.log("打开过");
+				  },
+				  fail(res){
+					  console.log("失败了");
+				  }
+				})
 			},
 			publishMessage(){
 				uni.navigateTo({

@@ -52,6 +52,17 @@
 			this.pageNo++;
 			this.getList();
 		},
+		
+		//分享
+		onShareAppMessage(res) {
+		    if (res.from === 'menu') {// 来自页面内分享按钮
+		      console.log(res.target)
+		    }
+		    return {
+		      title: '单身贵族必备神器，撩不到另一半算我输。',
+		      path: '/pages/tabbar/tabbar-home/tabbar-home'
+		    }
+		  },
 
 		methods: {
 			search(val) {

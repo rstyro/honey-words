@@ -1,5 +1,5 @@
-const baseUrl = 'http://localhost:8689';  
-// const baseUrl = 'https://www.lrshuai.top/miniapi';  
+// const baseUrl = 'http://localhost:8689';  
+const baseUrl = 'https://www.lrshuai.top/miniapi';  
 const preUrl="https://www.lrshuai.top/miniadmin/show";
 
 //首页列表				
