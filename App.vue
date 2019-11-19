@@ -3,7 +3,7 @@
 export default {
 	onLaunch: function() {
 		console.log('App Launch');
-		 this.setInit();
+		 // this.setInit();
 	},
 	onShow: function() {
 		console.log('App Show');

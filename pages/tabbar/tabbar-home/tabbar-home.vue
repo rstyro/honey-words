@@ -124,7 +124,7 @@
 							
 					}else if(res.data.status == "70000"){
 						uni.removeStorageSync("token");
-						commons.showTokenError();
+						commons.showTokenError("查看更多数据需要登录");
 					}else{
 						commons.requestError();
 					}

@@ -22,10 +22,13 @@ const aboutUrl="/mini/about/list";
 const topicType="topic";
 const sftType="speechcraft";
 
-const showTokenError = function(){
+const showTokenError = function(msg){
+	if(typeof(msg) == "undefined" || msg == ""){
+		msg = "此操作需要登录";
+	}
 	uni.showModal({
 		title: '提示',
-		content: '此操作需要登录',
+		content: msg,
 		showCancel: true,
 		success: function (res) {
 			if (res.confirm) {
@@ -53,7 +56,7 @@ const showNoMore = function(){
 // 点赞
 const praise = function(url,authority,tableId,tableType,list){
 	if(authority == ""){
-		showTokenError();
+		showTokenError("Sorry,需要登录才可点赞哟");
 	}
 	uni.request({
 			url: url,
@@ -90,7 +93,7 @@ const praise = function(url,authority,tableId,tableType,list){
 				console.log("点赞成功")
 			}else if(res.data.status == "70000"){
 				uni.removeStorageSync("token");
-				showTokenError();
+				showTokenError("Sorry,需要登录才可点赞哟");
 			}else{
 				uni.showToast({
 					title: res.data.message,
@@ -106,7 +109,7 @@ const praise = function(url,authority,tableId,tableType,list){
 //收藏
 const collect = function(url,authority,tableId,tableType,list){
 	if(authority == ""){
-		showTokenError();
+		showTokenError("Sorry,需要登录才可收藏哟");
 	}
 	uni.request({
 			url: url,
@@ -137,7 +140,7 @@ const collect = function(url,authority,tableId,tableType,list){
 				console.log("收藏成功,tableId={}",tableId)
 			}else if(res.data.status == "70000"){
 				uni.removeStorageSync("token");
-				showTokenError();
+				showTokenError("Sorry,需要登录才可收藏哟");
 			}else{
 				uni.showToast({
 					title: res.data.message,

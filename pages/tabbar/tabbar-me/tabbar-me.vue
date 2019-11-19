@@ -120,7 +120,7 @@
 						this.menus[0].isShow=true;
 					}
 				}else{
-					commons.showTokenError();
+					commons.showTokenError("是否登录查看更多内容");
 				}
 				uni.stopPullDownRefresh();
 				console.log("userInfo:",userInfo);
@@ -170,7 +170,7 @@
 			},
 			collectPage(){
 				if(!this.userInfo.userId){
-					commons.showTokenError();
+					commons.showTokenError("是否需要登录查看");
 					return;
 				}
 				uni.navigateTo({
@@ -215,7 +215,7 @@
 			},
 			systemMessage(){
 				if(!this.userInfo.userId){
-					commons.showTokenError();
+					commons.showTokenError("登录才有此功能");
 					return;
 				}
 				this.menus[1].redDot=false;
@@ -239,7 +239,7 @@
 			},
 			feedback(){
 				if(!this.userInfo.userId){
-					commons.showTokenError();
+					commons.showTokenError("需要登录才可反馈");
 					return;
 				}
 				uni.navigateTo({

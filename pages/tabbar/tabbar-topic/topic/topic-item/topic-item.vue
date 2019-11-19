@@ -70,7 +70,7 @@
 				if(cacheToken){
 					this.authority=cacheToken;
 				}else{
-					commons.showTokenError();
+					commons.showTokenError("主题详情需要登录才可浏览哟");
 					return;
 				}
 				this.getDetail();
@@ -119,7 +119,7 @@
 						
 					}else if(res.data.status == "70000"){
 						uni.removeStorageSync("token");
-						commons.showTokenError();
+						commons.showTokenError("需要登录才可查看主题详情");
 					}
 				});
 			},
