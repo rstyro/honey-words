@@ -60,6 +60,10 @@
 		methods: {
 			// 选中
 			choose(item) {
+				if(!this.authority){
+					commons.showTokenError("Soory,主题详情需要登录才可浏览哟");
+					return;
+				}
 				// item 返回选中 JSON 对象
 				console.log("chooose:",item);
 				uni.navigateTo({
