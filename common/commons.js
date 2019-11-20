@@ -19,6 +19,9 @@ const collectUrl="/pua/collect/collectMe";
 
 const aboutUrl="/mini/about/list";
 
+// 鸡汤url
+const chickenSoupUrl="/sys/chickenSoup/list";
+
 const topicType="topic";
 const sftType="speechcraft";
 
@@ -53,6 +56,15 @@ const showNoMore = function(){
 	});
 }
 
+const thanks=function(){
+	uni.showToast({
+		icon: "none",
+	    title: '谢谢，你最棒了！',
+		image: '/static/img/thank.png',
+	    duration: 2000
+	});
+}
+
 // 点赞
 const praise = function(url,authority,tableId,tableType,list){
 	if(authority == ""){
@@ -78,6 +90,7 @@ const praise = function(url,authority,tableId,tableType,list){
 					item.praiseFlag = !item.praiseFlag
 					if(item.praiseFlag){
 						++item.praiseNum;
+						thanks();
 					}else{
 						item.praiseNum = (item.praiseNum>0)?item.praiseNum-1:item.praiseNum
 					}
@@ -86,14 +99,17 @@ const praise = function(url,authority,tableId,tableType,list){
 					list.praiseFlag=!list.praiseFlag;
 					if(list.praiseFlag){
 						++list.praiseNum;
+						thanks();
 					}else{
 						list.praiseNum = (list.praiseNum>0)?list.praiseNum-1:list.praiseNum
 					}
 				}
-				console.log("点赞成功")
+				console.log("点赞成功");
+				
 			}else if(res.data.status == "70000"){
 				uni.removeStorageSync("token");
 				showTokenError("Sorry,需要登录才可点赞哟");
+				return;
 			}else{
 				uni.showToast({
 					title: res.data.message,
@@ -189,4 +205,5 @@ export default {
 	praise,
 	collect,
 	getMsgAmount,
+	chickenSoupUrl
 }

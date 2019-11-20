@@ -86,7 +86,9 @@
         }
         ,{
             "path" : "pages/tabbar/tabbar-me/menus/chicken-soup/chicken-soup",
-            "style" : {}
+            "style" : {
+				"enablePullDownRefresh": false
+			}
         }
     ],
 	"globalStyle": {
