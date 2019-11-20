@@ -45,8 +45,8 @@
 					},
 					{
 						key: 2,
-						name: '社区',
-						url: '/static/img/cloud.png'
+						name: '鸡汤',
+						url: '/static/img/coffee.png'
 					},
 					{
 						name: '打赏',
@@ -131,7 +131,7 @@
 						this.collectPage();
 						break;
 					case 2:
-						this.cloudPage();
+						this.chickenSoup();
 						break;
 					case 3:
 						this.rewardMoney();
@@ -179,10 +179,11 @@
 				    animationDuration: 1000
 				});
 			},
-			cloudPage(){
-				uni.showToast({
-					title: '暂未开放',
-					duration: 2000
+			chickenSoup(){
+				uni.navigateTo({
+				    url: '/pages/tabbar/tabbar-me/menus/chicken-soup/chicken-soup',
+				    animationType: 'pop-in',
+				    animationDuration: 1000
 				});
 			},
 			rewardMoney(){
