@@ -1,1 +1,0 @@
-<view class="content"><m-search vue-id="1" mode="{{2}}" button="inside" backgroundColor="#efeff1" data-event-opts="{{[['^search',[['search',['$event']]]]]}}" bind:search="__e" bind:__l="__l"></m-search><view class="honey-list-box"><honey-list vue-id="2" honeyList="{{honeyList}}" praiseMe="{{praiseHoney}}" collectMe="{{collectHoney}}" bind:__l="__l"></honey-list></view></view>
