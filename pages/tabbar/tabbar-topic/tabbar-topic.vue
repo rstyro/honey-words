@@ -7,7 +7,8 @@
 </template>
 
 <script>
-	import commons from '@/common/commons.js';  
+	import commons from '@/common/commons.js'; 
+	import encryptUtil from '@/components/encrypt-util/encrypt-util.vue';
 	// 瀑布流组件
 	import WaterfallFlow from '@/components/nairenk-waterfall-flow/nairenk-waterfall-flow.vue';
 	export default {
@@ -89,12 +90,15 @@
 				    }
 				}).then(data=>{
 					 var [error, res]  = data;
-					 console.log("res:",res);
-					 console.log("error:",error);
+					 console.log("res-topic:",res);
+					 console.log("error-topic:",error);
 					 if (typeof(res) != "undefined" && res.statusCode == 200 && res.data.status == 200){
-					 	that.pages=res.data.data.pages;
-					 	if(res.data.data.pages>0){
-					 		var resultList = res.data.data.records;
+						 const aeskey = encryptUtil.rsaDecrypt(res.data.key);
+						 var resultData = JSON.parse(encryptUtil.aesDecrypt(res.data.data,aeskey));
+						 // var resultData = res.data.data;
+					 	that.pages=resultData.pages;
+					 	if(resultData.pages>0){
+					 		var resultList = resultData.records;
 					 		for(var item of resultList){
 					 			item.picPath =commons.preUrl+item.picPath;
 					 		}

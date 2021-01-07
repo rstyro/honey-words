@@ -1,6 +1,8 @@
 // const baseUrl = 'http://localhost:8689';  
-const baseUrl = 'https://www.lrshuai.top/miniapi';  
-const preUrl="https://www.lrshuai.top/miniadmin/show";
+// const preUrl="http://localhost:8689/show";
+const baseUrl = 'https://www.rstyro.top/miniapi';  
+const preUrl="https://www.rstyro.top/miniadmin/show";
+
 
 //首页列表				
 const puaListUrl="/pua/speechcraft/list";

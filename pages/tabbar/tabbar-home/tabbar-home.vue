@@ -12,6 +12,7 @@
 <script>
 	import commons from '@/common/commons.js';  
 	import mSearch from '@/components/mehaotian-search/mehaotian-search.vue';
+	import encryptUtil from '@/components/encrypt-util/encrypt-util.vue';
 	import honeyList from '@/components/honey-words/honey-word-list/honey-word-list.vue';
 	
 	export default {
@@ -106,18 +107,25 @@
 						console.log(error);
 					}
 					if(typeof(res) != "undefined" && res.statusCode == 200 && res.data.status == 200){
-						console.log("list:",res.data.data.records);
+						const aeskey = encryptUtil.rsaDecrypt(res.data.key);
+						var resultData = JSON.parse(encryptUtil.aesDecrypt(res.data.data,aeskey));
+						console.log("aaa=",encryptUtil.rsaEncrypt("aaaa"));
+						console.log("aaa=",encryptUtil.rsaDecrypt(encryptUtil.rsaEncrypt("aaaa")));
+						console.log("bbb=",encryptUtil.aesEncrypt("aaaa","1234569871236547"));
+						console.log("bbb=",encryptUtil.aesDecrypt(encryptUtil.aesEncrypt("aaaa","1234569871236547"),"1234569871236547"));
+						// var resultData = res.data.data;
+						console.log("list:",resultData.records);
 						if(this.pageNo == 1){
 							uni.pageScrollTo({
 							    scrollTop: 0,
 							    duration: 30
 							});
 						}
-						
-						this.pages=res.data.data.pages;
-						if(res.data.data.pages>0){
+						this.pages=resultData.pages;
+						console.log("ressult:",resultData);
+						if(resultData.pages>0){
 							this.isNull=false;
-							this.list = this.list.concat(res.data.data.records);
+							this.list = this.list.concat(resultData.records);
 						}else{
 							this.isNull=true;
 						}

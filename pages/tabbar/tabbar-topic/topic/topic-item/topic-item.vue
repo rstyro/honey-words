@@ -43,6 +43,7 @@
 <script>
 	import commons from '@/common/commons.js'; 
 	import VueStar from '@/components/star-animated/star-animated.vue';
+	import encryptUtil from '@/components/encrypt-util/encrypt-util.vue';
 	import honeyList from '@/components/honey-words/honey-word-list/honey-word-list.vue';
 	export default {
 		data() {
@@ -138,12 +139,14 @@
 				    }
 				}).then(data=>{
 					var [error, res] = data;
-					console.log("res:",res);
+					console.log("res-topic-item:",res);
 					if(error){
 						console.log(error);
 					}
 					if(res.data.status == 200){
-						console.log("list:",res.data.data.records);
+						const aeskey = encryptUtil.rsaDecrypt(res.data.key);
+						var resultData = JSON.parse(encryptUtil.aesDecrypt(res.data.data,aeskey));
+						console.log("list-topic-item:",resultData);
 						if(this.pageNo == 1){
 							uni.pageScrollTo({
 							    scrollTop: 0,
@@ -151,14 +154,14 @@
 							});
 						}
 						
-						this.pages=res.data.data.pages;
-						if(res.data.data.pages>0){
+						this.pages=resultData.pages;
+						if(resultData.pages>0){
 							this.isNull=false;
-							this.list = this.list.concat(res.data.data.records);
+							this.list = this.list.concat(resultData.records);
 						}else{
 							this.isNull=true;
 						}
-							
+						
 					}else if(res.data.status == "70000"){
 						uni.removeStorageSync("token");
 						commons.showTokenError();
