@@ -15,6 +15,7 @@
 	import encryptUtil from '@/components/encrypt-util/encrypt-util.vue';
 	import honeyList from '@/components/honey-words/honey-word-list/honey-word-list.vue';
 	
+	
 	export default {
 		components: {
 			mSearch,
@@ -109,12 +110,12 @@
 					if(typeof(res) != "undefined" && res.statusCode == 200 && res.data.status == 200){
 						const aeskey = encryptUtil.rsaDecrypt(res.data.key);
 						var resultData = JSON.parse(encryptUtil.aesDecrypt(res.data.data,aeskey));
-						console.log("aaa=",encryptUtil.rsaEncrypt("aaaa"));
-						console.log("aaa=",encryptUtil.rsaDecrypt(encryptUtil.rsaEncrypt("aaaa")));
-						console.log("bbb=",encryptUtil.aesEncrypt("aaaa","1234569871236547"));
-						console.log("bbb=",encryptUtil.aesDecrypt(encryptUtil.aesEncrypt("aaaa","1234569871236547"),"1234569871236547"));
+						// console.log("aaa=",encryptUtil.rsaEncrypt("aaaa"));
+						// console.log("aaa=",encryptUtil.rsaDecrypt(encryptUtil.rsaEncrypt("aaaa")));
+						// console.log("bbb=",encryptUtil.aesEncrypt("aaaa","1234569871236547"));
+						// console.log("bbb=",encryptUtil.aesDecrypt(encryptUtil.aesEncrypt("aaaa","1234569871236547"),"1234569871236547"));
 						// var resultData = res.data.data;
-						console.log("list:",resultData.records);
+						// console.log("list:",resultData.records);
 						if(this.pageNo == 1){
 							uni.pageScrollTo({
 							    scrollTop: 0,

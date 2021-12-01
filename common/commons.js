@@ -1,7 +1,10 @@
 // const baseUrl = 'http://localhost:8689';  
 // const preUrl="http://localhost:8689/show";
 const baseUrl = 'https://www.rstyro.top/miniapi';  
+const deerBaseUrl = 'https://www.rstyro.top/deerapi';  
 const preUrl="https://www.rstyro.top/miniadmin/show";
+const deerPreUrl="https://www.rstyro.top/deerapi/show";
+const baseViewUrl="https://rstyro.top/#/";
 
 
 //首页列表				
@@ -190,7 +193,10 @@ const getMsgAmount=function(authority){
 			
 export default {
     baseUrl,
+	deerBaseUrl,
 	preUrl,
+	deerPreUrl,
+	baseViewUrl,
 	puaListUrl,
 	puaTopicListUrl,
 	puaTopicDetailUrl,

@@ -1,6 +1,9 @@
 //aes 向量
 const aesIv = "123456789abcdefh";
 
+// 模板aes 加解密 密钥
+const aesKey = "rstyro8888888888";
+
 // 后端公钥
 const backPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJvCDW9GIBsiv9ma9r2btffIxQQHB98Pl1S2RV2PrQsK1O2yFSUf8P43l5EfAh+jiEn/k5egKEoeMRLdDZkt5afNgPYbNjiRFJP8NZTw4f3Yxp91+d04GGkeFcj59QIn/rqqHo2JLOESNae8IC1tKKQTqkwVIjLRwTIDcVmsq9NwIDAQAB";
 
@@ -10,6 +13,7 @@ const mePrivateKey="MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAJ/QHgCXbAi4
 			
 export default {
     aesIv,
+	aesKey,
 	backPublicKey,
 	mePublicKey,
 	mePrivateKey

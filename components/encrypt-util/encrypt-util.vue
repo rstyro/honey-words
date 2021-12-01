@@ -21,7 +21,6 @@
 		rsaEncrypt: function(content){
 			var encrypt = new jsencrypt.JSEncrypt();
 			encrypt.setPublicKey('-----BEGIN PUBLIC KEY-----' + config.mePublicKey + '-----END PUBLIC KEY-----');
-			console.log("mePublicKey:",config.mePublicKey);
 		    return encrypt.encryptLong(content);
 		},
 		
@@ -68,6 +67,25 @@
 		//随机生成aes 密钥
 		genAesKey: function(){
 		    return CryptoJS.lib.WordArray.random(128/8).toString();
+		},
+		
+		// aes加密无向量
+		encryptAes: function(word, keyStr){
+		   keyStr = keyStr ? keyStr : config.aesKey;
+		   const key  = CryptoJS.enc.Utf8.parse(keyStr);
+		   const srcs = CryptoJS.enc.Utf8.parse(word);
+		   const encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+		   return encrypted.toString();
+		},
+		
+		//aes解密无向量
+		decryptAes: function(word, keyStr){
+		   keyStr = keyStr ? keyStr : config.aesKey;
+		   // 空格换+号，不然会报错
+		   word = word.replace(/\s/g,"+");
+		   const key  = CryptoJS.enc.Utf8.parse(keyStr);
+		   const decrypt = CryptoJS.AES.decrypt(word, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+		   return CryptoJS.enc.Utf8.stringify(decrypt).toString();
 		}
 	}
 </script>
