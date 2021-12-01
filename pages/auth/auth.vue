@@ -119,6 +119,9 @@
 				if(data.token){
 					uni.setStorageSync("token",data.token);
 				}
+				if(data.deerToken){
+					uni.setStorageSync("deerToken",data.deerToken);
+				}
 				if(data.userInfo){
 					uni.setStorageSync("userInfo",data.userInfo);
 				}

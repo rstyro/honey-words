@@ -8,10 +8,10 @@
 			}
 		},
 		{
-		    "path" : "pages/auth/auth",
-		    "style" : {}
+			"path": "pages/auth/auth",
+			"style": {}
 		},
-		
+
 		{
 			"path": "pages/tabbar/tabbar-topic/tabbar-topic",
 			"style": {
@@ -23,72 +23,133 @@
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
-		}
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/reward/reward",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/reward/reward",
+			"style": {
 				"navigationBarTitleText": "打赏",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/feedback/feedback",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/feedback/feedback",
+			"style": {
 				"navigationBarTitleText": "反馈",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/about/about",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/about/about",
+			"style": {
 				"navigationBarTitleText": "关于",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/collect/collect",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/collect/collect",
+			"style": {
 				"navigationBarTitleText": "收藏",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/publish-message/publish-message",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/publish-message/publish-message",
+			"style": {
 				"navigationBarTitleText": "发布消息",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/system-message/system-message",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/system-message/system-message",
+			"style": {
 				"navigationBarTitleText": "系统消息",
-				"disableScroll":true,
-				"app-plus":{
-					"bounce":"none"
+				"disableScroll": true,
+				"app-plus": {
+					"bounce": "none"
 				},
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/setting/setting",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/setting/setting",
+			"style": {
 				"navigationBarTitleText": "设置",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-topic/topic/topic-item/topic-item",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-topic/topic/topic-item/topic-item",
+			"style": {
 				"navigationBarTitleText": "主题详情",
 				"enablePullDownRefresh": false
 			}
-        }
-        ,{
-            "path" : "pages/tabbar/tabbar-me/menus/chicken-soup/chicken-soup",
-            "style" : {
+		}, {
+			"path": "pages/tabbar/tabbar-me/menus/chicken-soup/chicken-soup",
+			"style": {
 				"enablePullDownRefresh": false
 			}
+		}, {
+			"path": "pages/tabbar/tabbar-template/tabbar-template",
+			"style": {
+				"navigationBarTitleText": "模板",
+				"enablePullDownRefresh": true
+			}
+
+		}
+	    ,{
+            "path" : "pages/tabbar/tabbar-template/template-item/template-item",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "模板详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-template/template-view/template-view",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "模板预览",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-template/template-item/treeMake/treeMake",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "定制页面",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-template/template-item/paricleMake/paricleMake",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-template/template-item/pointBoomMake/pointBoomMake",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-template/template-item/heartMake/heartMake",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-template/template-item/heartbeatMake/heartbeatMake",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {
@@ -116,7 +177,12 @@
 				"selectedIconPath": "static/img/tabbar/topic-active.png",
 				"text": "主题"
 			},
-		
+			{
+				"pagePath": "pages/tabbar/tabbar-template/tabbar-template",
+				"iconPath": "static/img/tabbar/topic.png",
+				"selectedIconPath": "static/img/tabbar/topic-active.png",
+				"text": "模板"
+			},
 			{
 				"pagePath": "pages/tabbar/tabbar-me/tabbar-me",
 				"iconPath": "static/img/tabbar/me.png",
