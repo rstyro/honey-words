@@ -10,27 +10,31 @@ export function getTemplateDetail (id) {
 
 // 点赞或取消点赞
 export function addLike (params) {
-    return request.post('/like/add',params,{isMini:false});
+    return request.postBody('/like/add',params,{isMini:false});
+}
+
+export function refreshToken (params) {
+    return request.postBody('/user/refreshToken',params,{isMini:false});
 }
 
 export function customizeParticle (params) {
-    return request.post('/userTemplate/customizeParticle',params,{isMini:false});
+    return request.postBody('/userTemplate/customizeParticle',params,{isMini:false});
 }
 
 export function customizePointBoom (params) {
-    return request.post('/userTemplate/customizePointBoom',params,{isMini:false});
+    return request.postBody('/userTemplate/customizePointBoom',params,{isMini:false});
 }
 
 export function customizeTree (params) {
-    return request.post('/userTemplate/customizeTree',params,{isMini:false});
+    return request.postBody('/userTemplate/customizeTree',params,{isMini:false});
 }
 
 export function customizeHeart (params) {
-    return request.post('/userTemplate/customizeHeart',params,{isMini:false});
+    return request.postBody('/userTemplate/customizeHeart',params,{isMini:false});
 }
 
 export function customizeHeartbeat (params) {
-    return request.post('/userTemplate/customizeHeartbeat',params,{isMini:false});
+    return request.postBody('/userTemplate/customizeHeartbeat',params,{isMini:false});
 }
 
 export function getUserTemplateList (params) {

@@ -26,6 +26,14 @@ export function getDeerToken () {
     }
 }
 
+export function showMsg (msg) {
+    uni.showToast({
+    	icon: "none",
+        title: msg,
+        duration: 1500
+    });
+}
+
 const aesKey = "rstyro8888888888";
 
 export function encrypt(word, keyStr){

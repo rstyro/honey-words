@@ -50,7 +50,7 @@
 		},
 		computed: {
 			getImgSrc() {
-				this.url = commons.deerPreUrl + this.qrcodeUrl + encodeURIComponent(this.content);
+				this.url = commons.deerPreUrl + this.qrcodeUrl + this.content;
 				if (this.showLogo) {
 					this.url += "&logoUrl=" + encodeURIComponent(this.logoUrl);
 				}
