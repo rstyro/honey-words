@@ -6,6 +6,7 @@
 				<input name="title" v-model="dto.title" placeholder="请输入网页标题" value='小鹿乱撞'></input>
 			</view>
 
+
 			<view class="list-line">
 				<text>文字列表:</text>
 				<view>
@@ -18,7 +19,6 @@
 
 				</view>
 			</view>
-			
 
 
 			<view class="row-box">
@@ -27,15 +27,12 @@
 			</view>
 		</form>
 
-		<view class="form-item">
-
-		</view>
 
 	</view>
 </template>
 
 <script>
-	import { customizeHeartbeat } from '@/common/deerapi.js';
+	import {customizeParticle} from '@/common/deerapi.js';
 	import encryptUtil from '@/components/encrypt-util/encrypt-util.vue';
 	export default {
 		data() {
@@ -48,7 +45,7 @@
 						'',
 					],
 				},
-				
+
 			};
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
@@ -57,16 +54,21 @@
 				this.dto.templateId = option.id;
 				this.params = option?.d;
 			}
-
 			if (this.params) {
 				let decodeData = encryptUtil.decryptAes(this.params);
 				const jsonContent = JSON.parse(decodeData);
 				this.dto.title = jsonContent.title;
-				this.dto.list = jsonContent.list;
+				if (jsonContent.params) {
+					// 截取前后的 |
+					// const resultStr = jsonContent.params.substring(1,jsonContent.params.length-2)
+					this.dto.list = jsonContent.params.split("|");
+				}
+
 			}
-			
+
 		},
 		methods: {
+			
 			addItem() {
 				if (this.dto.list.length >= 10) {
 					uni.showToast({
@@ -85,14 +87,14 @@
 			},
 			formSubmit: function(e) {
 				var formdata = e.detail.value;
-				console.log("formData:", this.dto);
-				customizeHeartbeat(this.dto).then(res=>{
-					console.log("formSubmit-res=",res);
+				this.dto.params = this.dto.list.join("|");
+				customizeParticle(this.dto).then(res => {
+					console.log("formSubmit-res=", res);
 					if (res.data?.status == "200") {
 						let url = res.data.data.viewCodeUrl;
-						
 						uni.navigateTo({
-							url: '/pages/tabbar/tabbar-template/template-view/template-view?url=' + encodeURIComponent(url),
+							url: '/pages/tabbar/tabbar-template/template-view/template-view?url=' +
+								encodeURIComponent(url),
 							animationType: 'slide-in-bottom',
 							animationDuration: 1000
 						});

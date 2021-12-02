@@ -74,7 +74,6 @@
 	export default {
 		data() {
 			return {
-				id: 0,
 				params: '',
 				dto: {
 					title: '2021-12-01 12:00:00',
@@ -90,13 +89,12 @@
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
 			console.log(option); //打印出上个页面传递的参数。
 			if (option.hasOwnProperty("id")) {
-				this.id = option.id;
+				this.dto.templateId = option.id;
 				this.params = option?.d;
 			}
 
 			if (this.params) {
 				let decodeData = encryptUtil.decryptAes(this.params);
-				console.log("decodeData:",decodeData);
 				const jsonContent = JSON.parse(decodeData);
 				this.dto.showTime = jsonContent.showTime;
 				this.dto.title = jsonContent.title;
@@ -138,10 +136,18 @@
 			},
 			formSubmit: function(e) {
 				var formdata = e.detail.value;
-				console.log("formData:", formdata);
 				console.log("formData:", this.dto);
 				customizeTree(this.dto).then(res=>{
-					console.log("res=",res);
+					console.log("formSubmit-res=",res);
+					if (res.data?.status == "200") {
+						let url = res.data.data.viewCodeUrl;
+						
+						uni.navigateTo({
+							url: '/pages/tabbar/tabbar-template/template-view/template-view?url=' + encodeURIComponent(url),
+							animationType: 'slide-in-bottom',
+							animationDuration: 1000
+						});
+					}
 				});
 			},
 			formReset: function(e) {

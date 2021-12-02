@@ -66,7 +66,7 @@
 					return;
 				}
 				// item 返回选中 JSON 对象
-				console.log("chooose:",item);
+				// console.log("chooose:",item);
 				uni.navigateTo({
 				    url: '/pages/tabbar/tabbar-topic/topic/topic-item/topic-item?topicId='+item.id,
 				    animationType: 'zoom-out',
@@ -90,8 +90,8 @@
 				    }
 				}).then(data=>{
 					 var [error, res]  = data;
-					 console.log("res-topic:",res);
-					 console.log("error-topic:",error);
+					 // console.log("res-topic:",res);
+					 // console.log("error-topic:",error);
 					 if (typeof(res) != "undefined" && res.statusCode == 200 && res.data.status == 200){
 						 const aeskey = encryptUtil.rsaDecrypt(res.data.key);
 						 var resultData = JSON.parse(encryptUtil.aesDecrypt(res.data.data,aeskey));

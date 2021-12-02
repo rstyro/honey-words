@@ -4,11 +4,11 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch');
-			// this.setInit();
+			this.setInit();
 		},
 		onShow: function() {
 			console.log('App Show');
-			this.getSysMsg();
+			// this.getSysMsg();
 		},
 		onHide: function() {
 			console.log('App Hide');
@@ -16,8 +16,8 @@
 		methods: {
 			setInit() {
 				console.log("初始化信息");
-				uni.setStorageSync("token", "722eccb31b6348e58e67b208dd6495aa");
-				uni.setStorageSync("deerToken", "rstyro");
+				uni.setStorageSync("token", "");
+				uni.setStorageSync("deerToken", "");
 				var userInfo = {
 					"userId": 1,
 					"nickName": "帅大叔",

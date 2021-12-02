@@ -76,7 +76,7 @@
 			},
 			setToken(){
 				const cacheToken = uni.getStorageSync("token");
-				console.log("cacheToken:",cacheToken);
+				// console.log("cacheToken:",cacheToken);
 				if(cacheToken){
 					this.authority=cacheToken;
 				}
@@ -103,7 +103,7 @@
 				    }
 				}).then(data=>{
 					var [error, res] =data;
-					console.log("res:",res);
+					// console.log("res:",res);
 					if(error){
 						console.log(error);
 					}
@@ -123,7 +123,7 @@
 							});
 						}
 						this.pages=resultData.pages;
-						console.log("ressult:",resultData);
+						// console.log("ressult:",resultData);
 						if(resultData.pages>0){
 							this.isNull=false;
 							this.list = this.list.concat(resultData.records);

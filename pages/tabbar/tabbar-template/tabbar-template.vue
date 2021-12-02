@@ -4,13 +4,13 @@
 			<image mode="aspectFill" class="template-img" :src="imgUrl(item.img)"></image>
 			<view class="template-desc">{{item.description}}</view>
 			<view  class="card-actions row-box">
-				<view class="card-actions-item" @click="actionsClick('点赞')">
+				<view class="card-actions-item" >
 					<uni-icons type="eye" size="18" color="#999"></uni-icons>
 					<text class="card-actions-item-text">{{conversionNum(item.browseNum)}}</text>
 				</view>
-				<view class="card-actions-item" @click="actionsClick('评论')">
+				<view class="card-actions-item" >
 					<uni-icons type="heart" size="18" color="#999"></uni-icons>
-					<text class="card-actions-item-text">{{conversionNum(item.commentNum)}}</text>
+					<text class="card-actions-item-text">{{conversionNum(item.likeNum)}}</text>
 				</view>
 			</view>
 		</view>
@@ -19,9 +19,7 @@
 </template>
 
 <script>
-	import {
-		getTemplateList
-	} from '@/common/deerapi.js';
+	import { getTemplateList,refreshToken} from '@/common/deerapi.js';
 	import commons from '@/common/commons.js';
 
 	export default {
@@ -51,21 +49,24 @@
 			},
 			getDataList() {
 				getTemplateList().then(res => {
-					console.log("res:", res);
+					// console.log("res:", res);
 					if (res.data.status == "200") {
 						this.list = res.data.data;
 					}
 				}).catch(err => {
 					console.log("err:", err);
+				});
+				refreshToken().then(res=>{
+					// console.log("refreshToken-res:",res);
+					if (res.data.status == "200") {
+						uni.setStorageSync("deerToken",res.data.data.token);
+					}
+				}).catch(err=>{
+					
 				})
 			},
 			toDetail(id) {
-				console.log("item=", id);
-				// if(!this.authority){
-				// 	commons.showTokenError("Soory,模板详情需要登录才可预览定制哟");
-				// 	return;
-				// }
-				console.log("chooose:", id);
+				
 				uni.navigateTo({
 					url: '/pages/tabbar/tabbar-template/template-item/template-item?templateId=' + id,
 					animationType: 'slide-in-right',

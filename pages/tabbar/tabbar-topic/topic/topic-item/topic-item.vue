@@ -64,7 +64,7 @@
 			}
 		},
 		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-			console.log(option); //打印出上个页面传递的参数。
+			// console.log(option); //打印出上个页面传递的参数。
 			if(option.hasOwnProperty("topicId")){
 				this.id=option.topicId;
 				const cacheToken = uni.getStorageSync("token");
@@ -80,7 +80,7 @@
 		},
 		onReachBottom(){
 			if(this.pages == this.pageNo){
-				console.log("到底了");
+				// console.log("到底了");
 				commons.showNoMore();
 				return;
 			}
@@ -171,9 +171,9 @@
 					
 				});
 				uni.hideNavigationBarLoading();
-				console.log("准备停止刷新");
+				// console.log("准备停止刷新");
 				uni.stopPullDownRefresh();
-				console.log("结束停止刷新");
+				// console.log("结束停止刷新");
 			},
 			praiseHoney(id){
 				commons.praise(commons.baseUrl+commons.praiseUrl,this.authority,id,commons.sftType,this.list);

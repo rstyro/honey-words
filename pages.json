@@ -116,10 +116,10 @@
             
         }
         ,{
-            "path" : "pages/tabbar/tabbar-template/template-item/paricleMake/paricleMake",
+            "path" : "pages/tabbar/tabbar-template/template-item/particleMake/particleMake",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "定制页面",
                 "enablePullDownRefresh": false
             }
             
@@ -128,7 +128,7 @@
             "path" : "pages/tabbar/tabbar-template/template-item/pointBoomMake/pointBoomMake",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "定制页面",
                 "enablePullDownRefresh": false
             }
             
@@ -137,7 +137,7 @@
             "path" : "pages/tabbar/tabbar-template/template-item/heartMake/heartMake",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "定制页面",
                 "enablePullDownRefresh": false
             }
             
@@ -146,7 +146,7 @@
             "path" : "pages/tabbar/tabbar-template/template-item/heartbeatMake/heartbeatMake",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "定制页面",
                 "enablePullDownRefresh": false
             }
             
@@ -179,8 +179,8 @@
 			},
 			{
 				"pagePath": "pages/tabbar/tabbar-template/tabbar-template",
-				"iconPath": "static/img/tabbar/topic.png",
-				"selectedIconPath": "static/img/tabbar/topic-active.png",
+				"iconPath": "static/img/tabbar/template.png",
+				"selectedIconPath": "static/img/tabbar/template-active.png",
 				"text": "模板"
 			},
 			{

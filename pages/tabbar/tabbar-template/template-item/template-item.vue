@@ -9,7 +9,7 @@
 
 			<view class="template-actions-item">
 				<uni-icons type="heart" size="18" color="#999"></uni-icons>
-				<text class="card-actions-item-text">{{work.commentNum}}</text>
+				<text class="card-actions-item-text">{{work.likeNum}}</text>
 			</view>
 
 			<view class="template-actions-item">
@@ -24,8 +24,10 @@
 			{{work.description}}
 		</view>
 		<view class="template-like-box">
-			<uni-icons v-if="!work.likeFlag" type="heart" size="38" color="#ff0000"></uni-icons>
-			<uni-icons v-else type="heart-filled" size="38" color="#ff0000"></uni-icons>
+			<vue-star  class="icon-like" :active="work.likeFlag" animate="animated bounce" >
+				<image slot="icon" @click="like" v-if="work.likeFlag" class="star-icon" src="/static/img/honey/heart-active.png"></image>
+				<image slot="icon" @click="like" v-else class="star-icon" src="/static/img/honey/heart.png"></image>
+			</vue-star>
 		</view>
 		<view class="btn-box row-box">
 			<button class="btn-info" @click="toView">
@@ -40,12 +42,14 @@
 </template>
 
 <script>
-	import {
-		getTemplateDetail
-	} from '@/common/deerapi.js';
+	import VueStar from '@/components/star-animated/star-animated.vue';
+	import { getTemplateDetail,addLike} from '@/common/deerapi.js';
 	import commons from '@/common/commons.js';
 
 	export default {
+		components: {
+			VueStar
+		},
 		data() {
 			return {
 				id: 0,
@@ -53,19 +57,17 @@
 					url: '',
 					likeNum: 168,
 				},
+				dto:{
+					tableId:-1,
+					tableType:'template',
+				}
 			};
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
 			console.log(option); //打印出上个页面传递的参数。
 			if (option.hasOwnProperty("templateId")) {
 				this.id = option.templateId;
-				// const cacheToken = uni.getStorageSync("token");
-				// if(cacheToken){
-				// 	this.authority=cacheToken;
-				// }else{
-				// 	commons.showTokenError("主题详情需要登录才可浏览哟");
-				// 	return;
-				// }
+				this.dto.tableId = option.templateId;
 				this.getDetail();
 			}
 		},
@@ -85,20 +87,58 @@
 			imageError: function(e) {
 				console.error('image发生error事件，携带值为' + e.detail.errMsg)
 			},
+			like(){
+				const deerToken = uni.getStorageSync("deerToken");
+				if(!deerToken){
+					commons.showTokenError("需要登录才可操作哟");
+					return;
+				}
+				addLike(this.dto).then((res) => {
+					console.log("res:", res);
+					if(this.work.likeFlag){
+						this.work.likeNum-=1;
+					}else{
+						this.work.likeNum+=1;
+					}
+					this.work.likeFlag = !this.work.likeFlag;
+				}).catch(err=>{
+					console.log("err=",err);
+				})
+			},
 			toView() {
 				uni.navigateTo({
-					url: '/pages/tabbar/tabbar-template/template-view/template-view?url=' + this.work.url,
+					url: '/pages/tabbar/tabbar-template/template-view/template-view?url=' + encodeURIComponent(this.work.url),
 					animationType: 'slide-in-bottom',
 					animationDuration: 1000
 				});
 			},
 			toMave() {
+				const deerToken = uni.getStorageSync("deerToken");
+				if(!deerToken){
+					commons.showTokenError("需要登录才可定制模板哟");
+					return;
+				}
 				let makePage = "";
 				if("heartMake"== this.work.customizeName){
-					
+					makePage = "/pages/tabbar/tabbar-template/template-item/heartMake/heartMake";
+				}else if("heartbeatMake"== this.work.customizeName){
+					makePage = "/pages/tabbar/tabbar-template/template-item/heartbeatMake/heartbeatMake";
 				}else if("treeMake"== this.work.customizeName){
 					makePage = "/pages/tabbar/tabbar-template/template-item/treeMake/treeMake";
+				}else if("particleMake"== this.work.customizeName){
+					makePage = "/pages/tabbar/tabbar-template/template-item/particleMake/particleMake";
+				}else if("pointBoomMake"== this.work.customizeName){
+					makePage = "/pages/tabbar/tabbar-template/template-item/pointBoomMake/pointBoomMake";
 				}
+				if(makePage == ""){
+					uni.showToast({
+						icon: "none",
+						title: '该模板定制页面正在拼命开发中...',
+						duration: 1000
+					});
+					return;
+				}
+				
 				
 				uni.navigateTo({
 					url: makePage+'?id=' + this.work.id+"&d="+this.work.encryptOptions,
@@ -177,5 +217,17 @@
 			// 	}
 			// }
 		}
+		
+		.icon-like{
+			margin: 0rpx auto;
+			
+			.star-icon{
+				width: 120rpx;
+				height: 120rpx;
+				vertical-align: middle;
+			}
+		}
+		
+		
 	}
 </style>
